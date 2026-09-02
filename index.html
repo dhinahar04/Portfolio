@@ -1,536 +1,1303 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description"
-    content="Dhinahar M — Computer Science & Engineering student. Portfolio, projects, experience, and contact." />
-  <meta name="theme-color" content="#0b1220" />
-  <title>Dhinahar M | Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
-    rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Dhinahar M — Full Stack Developer</title>
+  <meta name="description" content="Portfolio of Dhinahar M, a Full Stack Developer building scalable web applications, backend systems and AI-powered digital experiences." />
+  <meta name="keywords" content="Dhinahar M, Full Stack Developer, Software Engineer, React, Next.js, Python, Java, AI, Machine Learning, Portfolio" />
+  <meta name="author" content="Dhinahar M" />
+  <meta name="theme-color" content="#070709" />
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dhinahar04.github.io/Portfolio/" />
+  <meta property="og:title" content="Dhinahar M — Full Stack Developer" />
+  <meta property="og:description" content="Building scalable web applications, robust backend systems, and AI-powered digital experiences." />
+  <meta property="og:image" content="https://dhinahar04.github.io/Portfolio/dhina.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dhinahar M — Full Stack Developer" />
+  <meta name="twitter:description" content="Building scalable web applications, robust backend systems, and AI-powered digital experiences." />
+
+  <!-- Fonts: Syne (Headings), Plus Jakarta Sans (Body), JetBrains Mono (Tech/Accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            deep: '#070709',
+            surface: '#0f0f14',
+            accent: {
+              cyan: '#22d3ee',
+              sky: '#38bdf8',
+              violet: '#818cf8'
+            }
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Lenis Smooth Scrolling Engine -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <!-- Canvas Confetti for Celebration Feedback -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
+<body class="bg-deep text-slate-100 antialiased selection:bg-cyan-500/20 selection:text-cyan-200">
 
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <!-- Cinematic Background Noise & Ambient Glow Gradients -->
+  <div class="noise-texture" aria-hidden="true"></div>
+  <div class="ambient-glow glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow glow-mid" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
 
-  <div class="cursor-aura" id="cursorAura"></div>
-  <div class="noise-overlay"></div>
+  <!-- Custom Cursor (Desktop Only) -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-follower" id="cursorFollower" aria-hidden="true">
+    <span class="cursor-label" id="cursorLabel">VIEW</span>
+  </div>
 
-  <header class="site-header" id="top">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="Go to top">
-        <span class="brand-mark" aria-hidden="true">DM</span>
-        <span class="brand-text">Dhinahar M</span>
+  <!-- ================================================== -->
+  <!-- 2. INTRO / LOADING EXPERIENCE -->
+  <!-- ================================================== -->
+  <aside class="loader-overlay" id="loaderOverlay" aria-label="Loading portfolio">
+    <div class="loader-content">
+      <div class="loader-badge">PORTFOLIO '26</div>
+      <h1 class="loader-name">DHINAHAR M</h1>
+      <div class="loader-counter-wrap">
+        <span class="loader-counter" id="loaderPercent">00%</span>
+        <div class="loader-bar-bg">
+          <div class="loader-bar-fill" id="loaderFill"></div>
+        </div>
+      </div>
+      <p class="loader-sub">FULL STACK DEVELOPER • AI SYSTEMS</p>
+    </div>
+  </aside>
+
+  <!-- ================================================== -->
+  <!-- 3. NAVIGATION -->
+  <!-- ================================================== -->
+  <header class="navbar fixed top-0 left-0 w-full z-50 transition-all duration-500" id="mainNavbar">
+    <div class="nav-container max-w-7xl mx-auto px-6 sm:px-8 py-5 flex items-center justify-between">
+      <!-- Left: Brand Logo -->
+      <a href="#hero" class="brand-link flex items-center gap-2 group" data-cursor="hover">
+        <span class="brand-text font-display text-xl sm:text-2xl font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+          DHINAHAR<span class="text-cyan-400">.</span>
+        </span>
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
-          <span class="sr-only">Open menu</span>
-          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-            <path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" />
-          </svg>
-        </button>
-
-        <div class="nav-menu" id="nav-menu">
-          <a class="nav-link" href="#home">Home</a>
-          <a class="nav-link" href="#about">About</a>
-          <a class="nav-link" href="#skills">Skills</a>
-          <a class="nav-link" href="#experience">Experience</a>
-          <a class="nav-link" href="#projects">Projects</a>
-          <a class="nav-link" href="#education">Education</a>
-          <a class="nav-link" href="#contact">Contact</a>
-        </div>
+      <!-- Center: Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] px-5 py-2 rounded-full shadow-2xl shadow-black/60" aria-label="Main Navigation">
+        <a href="#hero" class="nav-link active" data-cursor="hover">Home</a>
+        <a href="#about" class="nav-link" data-cursor="hover">About</a>
+        <a href="#projects" class="nav-link" data-cursor="hover">Work</a>
+        <a href="#skills" class="nav-link" data-cursor="hover">Skills</a>
+        <a href="#experience" class="nav-link" data-cursor="hover">Experience</a>
+        <a href="#services" class="nav-link" data-cursor="hover">Services</a>
+        <a href="#contact" class="nav-link" data-cursor="hover">Contact</a>
       </nav>
 
-      <div class="header-actions">
-        <button class="icon-btn" type="button" id="themeToggle" aria-label="Toggle dark mode">
-          <svg class="theme-icon theme-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path
-              d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM12 2v2m0 16v2M4 12H2m20 0h-2M5.64 5.64 4.22 4.22m15.56 15.56-1.42-1.42M18.36 5.64l1.42-1.42M4.22 19.78l1.42-1.42"
-              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      <!-- Right: Action & Sound Controls -->
+      <div class="hidden sm:flex items-center gap-3">
+        <!-- Audio Sound Effects Toggle -->
+        <button type="button" class="sound-toggle icon-button" id="soundToggle" title="Toggle audio feedback" aria-label="Toggle sound effects" data-cursor="hover">
+          <svg class="sound-icon-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
-          <svg class="theme-icon theme-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path d="M21 13.2A7.5 7.5 0 0 1 10.8 3a9 9 0 1 0 10.2 10.2Z" fill="none" stroke="currentColor"
-              stroke-width="2" stroke-linejoin="round" />
+          <svg class="sound-icon-off hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
           </svg>
         </button>
-        <a class="btn btn-primary" href="#contact">Contact</a>
+
+        <a href="#contact" class="cta-pill-button group" data-cursor="hover">
+          <span>Let's Talk</span>
+          <span class="arrow-glyph group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button type="button" class="mobile-menu-btn md:hidden" id="mobileMenuBtn" aria-label="Toggle mobile menu" aria-expanded="false" data-cursor="hover">
+        <span class="hamburger-bar top-bar"></span>
+        <span class="hamburger-bar bottom-bar"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer md:hidden" id="mobileDrawer" aria-hidden="true">
+      <div class="mobile-drawer-inner px-8 py-12 flex flex-col justify-between h-full">
+        <div class="flex flex-col gap-6">
+          <span class="text-xs uppercase tracking-widest text-neutral-500 font-mono">Navigation</span>
+          <a href="#hero" class="mobile-nav-link">01 / Home</a>
+          <a href="#about" class="mobile-nav-link">02 / About</a>
+          <a href="#projects" class="mobile-nav-link">03 / Featured Work</a>
+          <a href="#skills" class="mobile-nav-link">04 / Technologies</a>
+          <a href="#experience" class="mobile-nav-link">05 / Experience</a>
+          <a href="#services" class="mobile-nav-link">06 / What I Do</a>
+          <a href="#contact" class="mobile-nav-link">07 / Contact</a>
+        </div>
+        <div class="pt-8 border-t border-white/10 flex flex-col gap-4">
+          <a href="mailto:dhinaharmurugesan@gmail.com" class="text-neutral-400 hover:text-white font-mono text-sm">
+            dhinaharmurugesan@gmail.com
+          </a>
+          <div class="flex gap-5 text-sm text-neutral-400">
+            <a href="https://github.com/dhinahar04" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a href="https://www.linkedin.com/in/dhinahar-murugesan-69a6342a5/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            <a href="https://leetcode.com/u/Dhinahar_18/" target="_blank" rel="noopener noreferrer">LeetCode ↗</a>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <main id="main">
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="badge" data-reveal data-reveal-delay="100ms">Computer Science & Engineering • Full‑Stack Interest
-          </p>
-          <h1 class="hero-title" data-reveal data-reveal-delay="200ms">
-            <span class="reveal-line">Building clean, reliable</span>
-            <span class="reveal-line">web experiences — with a</span>
-            <span class="reveal-line">foundation in <span class="accent">DSA</span> & <span
-                class="accent">UI</span>.</span>
+  <main id="mainContent">
+
+    <!-- ================================================== -->
+    <!-- 4 & 5. HERO SECTION -->
+    <!-- ================================================== -->
+    <section class="hero-section min-h-screen relative flex items-center justify-center overflow-hidden pt-28 pb-16 px-6 sm:px-8" id="hero">
+      
+      <!-- Perimeter Supporting Badges -->
+      <div class="hero-meta-tag hero-meta-tl font-mono text-xs text-neutral-400 uppercase tracking-widest hidden lg:block">
+        BUILDING DIGITAL EXPERIENCES
+      </div>
+      <div class="hero-meta-tag hero-meta-tr font-mono text-xs text-neutral-400 uppercase tracking-widest hidden lg:block">
+        SCALABLE SYSTEMS • WEB • AI
+      </div>
+      <div class="hero-meta-tag hero-meta-bl font-mono text-xs text-neutral-400 uppercase tracking-widest hidden lg:flex items-center gap-2">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        AVAILABLE FOR HIGH-IMPACT ROLES
+      </div>
+      <div class="hero-meta-tag hero-meta-br font-mono text-xs text-neutral-400 uppercase tracking-widest hidden lg:block">
+        COIMBATORE, INDIA [11.0168° N, 76.9558° E]
+      </div>
+
+      <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
+        
+        <!-- Left: Cinematic Typography & Cycling Statements -->
+        <div class="lg:col-span-7 flex flex-col justify-center text-left">
+          
+          <!-- Eyebrow text -->
+          <div class="reveal-item flex items-center gap-3 mb-4">
+            <span class="h-[1px] w-8 bg-cyan-400"></span>
+            <span class="font-mono text-xs sm:text-sm tracking-[0.25em] text-cyan-300 font-semibold uppercase">
+              HI, I'M DHINAHAR M
+            </span>
+          </div>
+
+          <!-- Main Typography -->
+          <h1 class="font-display text-5xl sm:text-7xl xl:text-8xl font-extrabold tracking-tight leading-[0.95] text-white mb-6 uppercase">
+            <span class="block reveal-item">CREATIVE</span>
+            <span class="block reveal-item text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-500">
+              DEVELOPER
+            </span>
           </h1>
-          <p class="hero-subtitle" data-reveal data-reveal-delay="300ms">
-            I’m <strong>Dhinahar M</strong>, a CSE student passionate about shipping practical projects, learning fast,
-            and
-            collaborating to solve real-world problems.
+
+          <!-- Animated Dynamic Changing Statement -->
+          <div class="dynamic-ticker-wrap mb-8 reveal-item">
+            <div class="dynamic-ticker-pill">
+              <span class="ticker-dot"></span>
+              <div class="dynamic-ticker" id="dynamicTicker">
+                <span class="ticker-word active">FULL STACK DEVELOPER</span>
+                <span class="ticker-word">BACKEND ENGINEER</span>
+                <span class="ticker-word">SOFTWARE DEVELOPER</span>
+                <span class="ticker-word">PROBLEM SOLVER</span>
+                <span class="ticker-word">AI ENTHUSIAST</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Short Narrative Subtitle -->
+          <p class="text-base sm:text-lg text-neutral-400 max-w-xl font-normal leading-relaxed mb-10 reveal-item">
+            Crafting resilient distributed backends, intelligent machine learning systems, and fluid digital interfaces with meticulous attention to typography, performance, and scale.
           </p>
 
-          <div class="hero-cta" data-reveal data-reveal-delay="400ms">
-            <a class="btn btn-primary" href="#projects">View Projects</a>
-            <button class="btn btn-ghost" type="button" id="printResumeBtn">
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <path
-                  d="M7 8V4h10v4M7 17h10v3H7v-3Zm-2 0H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1"
-                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Hero Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 reveal-item">
+            <a href="#projects" class="primary-btn group" data-cursor="hover">
+              <span>View Projects</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" class="group-hover:translate-y-0.5 transition-transform">
+                <path d="M12 5v14M19 12l-7 7-7-7"></path>
               </svg>
-              Print Resume
-            </button>
-          </div>
-
-          <div class="quick-info" aria-label="Contact summary" data-reveal data-reveal-delay="500ms">
-            <button class="chip" type="button" data-copy="dhinaharmurugesan@gmail.com" title="Copy email">
-              <span class="chip-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18">
-                  <path d="M4 7.5 12 13l8-5.5M5 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <span class="chip-text">dhinaharmurugesan@gmail.com</span>
-            </button>
-            <button class="chip" type="button" data-copy="7810004798" title="Copy phone">
-              <span class="chip-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="18" height="18">
-                  <path d="M7 4h3l2 6-2 1c1 3 3 5 6 6l1-2 6 2v3c0 1-1 2-2 2C10 22 2 14 2 4c0-1 1-2 2-2h3Z" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
-              <span class="chip-text">+91 78100 04798</span>
-            </button>
-          </div>
-
-          <div class="social" aria-label="Social links">
-            <a class="social-link" href="https://www.linkedin.com/in/dhinahar-murugesan-69a6342a5/" target="_blank"
-              rel="noreferrer noopener" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <path
-                  d="M6.94 8.5H4.2V19.8h2.74V8.5ZM5.57 4.2a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2ZM19.8 19.8h-2.73v-5.5c0-1.31-.03-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9v5.6H10.4V8.5h2.62v1.54h.04c.36-.7 1.26-1.83 3.02-1.83 3.22 0 3.72 2.12 3.72 4.88v6.7Z"
-                  fill="currentColor" />
-              </svg>
-              LinkedIn
             </a>
-            <a class="social-link" href="https://github.com/dhinahar04" target="_blank" rel="noreferrer noopener"
-              aria-label="GitHub">
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <path
-                  d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.77.6-3.35-1.18-3.35-1.18-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.61.07-.61 1 .07 1.52 1.03 1.52 1.03.89 1.52 2.33 1.08 2.9.83.09-.64.35-1.08.63-1.33-2.21-.25-4.54-1.1-4.54-4.9 0-1.08.39-1.97 1.03-2.66-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.9-1.29 2.74-1.02 2.74-1.02.56 1.38.21 2.4.1 2.65.64.69 1.03 1.58 1.03 2.66 0 3.81-2.33 4.65-4.55 4.9.36.31.69.93.69 1.88V21c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"
-                  fill="currentColor" />
-              </svg>
-              GitHub
+            <a href="#contact" class="secondary-btn group" data-cursor="hover">
+              <span>Start a Conversation</span>
+              <span class="text-neutral-500 group-hover:text-white transition-colors">↗</span>
             </a>
-            <a class="social-link" href="https://leetcode.com/u/Dhinahar_18/" target="_blank" rel="noreferrer noopener"
-              aria-label="LeetCode">LeetCode</a>
-            <a class="social-link" href="https://www.codechef.com/users/dhinahar_4" target="_blank"
-              rel="noreferrer noopener" aria-label="CodeChef">CodeChef</a>
+          </div>
+
+        </div>
+
+        <!-- Right: Integrated Cinematic Portrait -->
+        <div class="lg:col-span-5 flex justify-center items-center relative">
+          <div class="portrait-stage relative group" id="heroPortraitWrap" data-cursor="hover">
+            
+            <!-- Soft Ambient Backlight Glow -->
+            <div class="portrait-glow" aria-hidden="true"></div>
+            
+            <!-- Frame with dark fade gradient blending -->
+            <div class="portrait-frame relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900/60 backdrop-blur-sm shadow-2xl">
+              <img 
+                src="dhina.jpg" 
+                alt="Portrait of Dhinahar M" 
+                class="portrait-img w-full h-[460px] sm:h-[520px] object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                id="heroPortraitImg"
+                loading="eager"
+              />
+              <!-- Bottom Dark Vignette Fade into Page Canvas -->
+              <div class="portrait-gradient-fade" aria-hidden="true"></div>
+
+              <!-- Floating Tech Badge Over Portrait -->
+              <div class="floating-portrait-chip bottom-6 left-6 right-6">
+                <div class="chip-glass flex items-center justify-between p-3 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10">
+                  <div class="flex items-center gap-3">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
+                    <span class="font-mono text-xs text-neutral-300 font-medium">B.E. Computer Science</span>
+                  </div>
+                  <span class="font-mono text-xs text-neutral-400">KIT '27</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <div class="hero-media" data-reveal>
-          <div class="portrait-card" role="img" aria-label="Portrait photo">
-            <img src="dhina.jpg" alt="Portrait of Dhinahar M" loading="eager" />
+      </div>
+
+      <!-- Bottom of Hero: Scroll Indicator -->
+      <a href="#about" class="hero-scroll-link absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-400 hover:text-white transition-colors group" data-cursor="hover">
+        <span class="font-mono text-[11px] uppercase tracking-[0.2em]">SCROLL TO EXPLORE</span>
+        <div class="scroll-mouse-icon">
+          <span class="scroll-wheel"></span>
+        </div>
+      </a>
+
+    </section>
+
+    <!-- ================================================== -->
+    <!-- 6. ABOUT SECTION -->
+    <!-- ================================================== -->
+    <section class="py-24 sm:py-32 px-6 sm:px-8 relative border-t border-white/[0.06]" id="about">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-xs text-cyan-400 tracking-[0.2em] uppercase font-semibold">01 // IDENTITY</span>
+          <span class="h-[1px] flex-1 max-w-[80px] bg-neutral-800"></span>
+          <h2 class="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 font-medium">ABOUT</h2>
+        </div>
+
+        <!-- Large Statement -->
+        <h3 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white max-w-5xl leading-[1.08] mb-16">
+          I BUILD DIGITAL PRODUCTS <br class="hidden sm:inline" />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-neutral-100 via-neutral-300 to-neutral-500">
+            THAT ARE SIMPLE, FAST AND SCALABLE.
+          </span>
+        </h3>
+
+        <!-- Editorial About Card Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          <!-- Left: Secondary Portrait Visual -->
+          <div class="lg:col-span-5">
+            <div class="relative rounded-3xl overflow-hidden border border-white/10 bg-neutral-900/50 p-3 group">
+              <div class="relative overflow-hidden rounded-2xl aspect-[4/5] bg-neutral-950">
+                <img 
+                  src="dhina.jpg" 
+                  alt="Dhinahar M in formal attire" 
+                  class="w-full h-full object-cover object-top filter grayscale contrast-110 group-hover:grayscale-0 transition-all duration-700" 
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                  <p class="font-mono text-xs text-neutral-400">DHINAHAR M</p>
+                  <p class="font-display text-lg text-white font-bold">FULL STACK DEVELOPER</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="stats" aria-label="Highlights">
-            <div class="stat">
-              <div class="stat-value">1000+</div>
-              <div class="stat-label">Solved Problems</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">90+</div>
-              <div class="stat-label">Contests</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">1100+</div>
-              <div class="stat-label">CodeChef Rating</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="about">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <h2 class="section-title">About</h2>
-          <p class="section-subtitle">A quick snapshot of who I am and what I’m aiming for.</p>
-        </div>
-
-        <div class="about-grid">
-          <article class="card" data-reveal data-reveal-delay="100ms">
-            <h3 class="card-title">Career Objective</h3>
-            <p class="muted">
-              Computer Science and Engineering student with strong skills in programming and full‑stack development.
-              Passionate about building real‑world applications and gaining hands‑on experience through internships and
-              projects.
-              Eager to apply technical knowledge, quickly learn new technologies, and contribute effectively in a
-              collaborative and innovative environment.
-            </p>
-            <div class="pill-row" aria-label="Focus areas">
-              <span class="pill">Full‑Stack</span>
-              <span class="pill">UI Engineering</span>
-              <span class="pill">DSA</span>
-              <span class="pill">Machine Learning (interest)</span>
-            </div>
-          </article>
-
-          <article class="card" data-reveal data-reveal-delay="200ms">
-            <h3 class="card-title">Strengths</h3>
-            <ul class="checklist">
-              <li>Clean, responsive UI with attention to details</li>
-              <li>Strong fundamentals: DSA, OOP, Operating Systems</li>
-              <li>Fast learner with consistent competitive programming practice</li>
-              <li>Reliable communication and teamwork mindset</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="skills">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <h2 class="section-title">Skills</h2>
-          <p class="section-subtitle">Core strengths and tools I’m comfortable with.</p>
-        </div>
-
-        <div class="skills-grid">
-          <article class="card" data-reveal data-reveal-delay="100ms">
-            <h3 class="card-title">Technical</h3>
-            <div class="tag-grid">
-              <span class="tag">Python</span>
-              <span class="tag">Java</span>
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">React.js</span>
-              <span class="tag">Node.js</span>
-              <span class="tag">Express.js</span>
-              <span class="tag">MongoDB</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">Git</span>
-              <span class="tag">GitHub</span>
-              <span class="tag">Vercel</span>
-              <span class="tag">VS Code</span>
-            </div>
-            <p class="muted small">Core subjects: Data Structures & Algorithms, OOP, Operating Systems.</p>
-          </article>
-
-          <article class="card" data-reveal data-reveal-delay="200ms">
-            <h3 class="card-title">Soft Skills</h3>
-            <ul class="bullet">
-              <li>Problem Solving</li>
-              <li>Team Management</li>
-              <li>Communication</li>
-              <li>Leadership</li>
-            </ul>
-          </article>
-
-          <article class="card" data-reveal data-reveal-delay="300ms">
-            <h3 class="card-title">Languages</h3>
-            <div class="lang">
-              <div class="lang-row">
-                <span>Tamil</span>
-                <span class="muted">Native</span>
-              </div>
-              <div class="lang-row">
-                <span>English</span>
-                <span class="muted">Professional</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="experience">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <h2 class="section-title">Experience</h2>
-          <p class="section-subtitle">Internships and practical work exposure.</p>
-        </div>
-
-        <div class="timeline">
-          <article class="timeline-item" data-reveal data-reveal-delay="100ms">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-card card">
-              <div class="row">
-                <h3 class="card-title">Full Stack Development Intern — Codec Technologies</h3>
-                <span class="meta">01/2026 – 02/2026 • Remote</span>
-              </div>
-              <p class="muted">
-                Worked on developing and maintaining web applications using HTML, CSS, and JavaScript, along with
-                backend frameworks and database integration.
-                Implemented APIs, dynamic features, and responsive design. Collaborated with team members to debug,
-                test, and optimize code.
+          <!-- Right: Bio & Key Capabilities -->
+          <div class="lg:col-span-7 flex flex-col justify-between h-full">
+            <div>
+              <span class="font-mono text-sm text-cyan-400 font-semibold mb-2 block">Hello, I'm Dhinahar.</span>
+              <p class="text-lg sm:text-xl text-neutral-300 font-light leading-relaxed mb-6">
+                I'm a Full Stack Developer focused on building modern web applications, backend systems and intelligent software experiences.
               </p>
-            </div>
-          </article>
-
-          <article class="timeline-item" data-reveal data-reveal-delay="200ms">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-card card">
-              <div class="row">
-                <h3 class="card-title">Frontend Development Intern — Apex Planet</h3>
-                <span class="meta">09/2025 – 10/2025 • Remote</span>
-              </div>
-              <p class="muted">
-                Delivered a fully responsive and scalable frontend for an e-commerce platform, featuring product
-                browsing, advanced filtering, cart management, and a seamless checkout experience.
-                Focused on performance, clean UI design, and smooth API integration.
+              <p class="text-neutral-400 text-base leading-relaxed mb-8">
+                Currently pursuing Computer Science & Engineering with a passion for high-performance software, algorithm optimization, and clean user experience. Whether architecting relational database schemas, designing resilient RESTful APIs with Python and Java, or developing reactive web interfaces with Next.js, my focus is always on clarity, speed, and craftsmanship.
               </p>
-            </div>
-          </article>
 
-          <article class="timeline-item" data-reveal data-reveal-delay="300ms">
-            <div class="timeline-dot" aria-hidden="true"></div>
-            <div class="timeline-card card">
-              <div class="row">
-                <h3 class="card-title">Data Science Intern — CIRF</h3>
-                <span class="meta">06/2025 – 07/2025 • Chennai, India</span>
+              <!-- Actions -->
+              <div class="flex flex-wrap items-center gap-4 mb-14">
+                <a href="#experience" class="primary-btn group" data-cursor="hover">
+                  <span>More About Me</span>
+                  <span class="group-hover:translate-x-0.5 transition-transform">↗</span>
+                </a>
+                <button type="button" class="secondary-btn group" id="downloadResumeBtn" data-cursor="hover">
+                  <span>Download Resume</span>
+                  <span class="group-hover:translate-y-0.5 transition-transform">↓</span>
+                </button>
               </div>
-              <p class="muted">
-                Analyzed Electric Vehicle Sales data to identify market trends, regional adoption patterns, and factors
-                influencing purchase decisions.
-                Used exploratory data analysis and predictive modeling to provide insights for data-driven sales and
-                marketing strategies.
-              </p>
             </div>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <section class="section" id="projects">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <h2 class="section-title">Projects</h2>
-          <p class="section-subtitle">Selected projects from full‑stack and ML work.</p>
-        </div>
+            <!-- Animated Statistics Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-10 border-t border-white/[0.08]">
+              
+              <div class="stat-box" data-target="1" data-suffix="+">
+                <div class="font-display text-3xl sm:text-4xl font-bold text-white mb-1 stat-number">01+</div>
+                <div class="font-mono text-xs uppercase tracking-wider text-neutral-400">Years Experience</div>
+              </div>
 
-        <div class="project-grid">
-          <article class="card project" data-reveal data-reveal-delay="100ms">
-            <div class="project-card-media">
-              <img src="phishing.png" alt="Phishing Detection project thumbnail" loading="lazy" />
-            </div>
-            <div class="project-head">
-              <h3 class="card-title">PHISHING EMAIL DETECTION</h3>
-              <button class="link-btn" type="button" data-modal-open="phishing">Details</button>
-            </div>
-            <p class="muted">
-              Built a machine learning model to detect phishing emails using text and URL-based features.
-              Deployed the model as a simple web app for real-time detection.
-            </p>
-            <div class="tag-row">
-              <span class="tag">Python</span>
-              <span class="tag">Machine Learning</span>
-              <span class="tag">NLP</span>
-            </div>
-            <div class="project-links">
-              <a class="mini-link" href="https://github.com/dhinahar04/phishing_email_detector" target="_blank"
-                rel="noreferrer noopener">Link</a>
-            </div>
-          </article>
+              <div class="stat-box" data-target="10" data-suffix="+">
+                <div class="font-display text-3xl sm:text-4xl font-bold text-white mb-1 stat-number">10+</div>
+                <div class="font-mono text-xs uppercase tracking-wider text-neutral-400">Projects Built</div>
+              </div>
 
-          <article class="card project" data-reveal data-reveal-delay="200ms">
-            <div class="project-card-media">
-              <img src="vehicle.png" alt="Vehicle Service system thumbnail" loading="lazy" />
-            </div>
-            <div class="project-head">
-              <h3 class="card-title">VEHICLE SERVICE & MAINTENANCE BOOKING SYSTEM</h3>
-              <button class="link-btn" type="button" data-modal-open="vehicle">Details</button>
-            </div>
-            <p class="muted">
-              Developed a full-stack system that allows users to book services, track status, and view service history.
-              Implemented admin and workshop panels for managing appointments.
-            </p>
-            <div class="tag-row">
-              <span class="tag">React.js</span>
-              <span class="tag">Node.js</span>
-              <span class="tag">MongoDB</span>
-            </div>
-            <div class="project-links">
-              <a class="mini-link" href="https://github.com/dhinahar04/Vehicle-Service-Maintenance-Booking-System"
-                target="_blank" rel="noreferrer noopener">Link</a>
-            </div>
-          </article>
+              <div class="stat-box" data-target="5" data-suffix="+">
+                <div class="font-display text-3xl sm:text-4xl font-bold text-white mb-1 stat-number">05+</div>
+                <div class="font-mono text-xs uppercase tracking-wider text-neutral-400">Core Tech</div>
+              </div>
 
-          <article class="card project" data-reveal data-reveal-delay="300ms">
-            <div class="project-card-media">
-              <img src="ai_assistant.png" alt="AI Study Assistant project thumbnail" loading="lazy" />
-            </div>
-            <div class="project-head">
-              <h3 class="card-title">Personal AI Study Assistant</h3>
-              <button class="link-btn" type="button" data-modal-open="ai_assistant">Details</button>
-            </div>
-            <p class="muted">
-              Developed an AI-powered study platform that summarizes notes, generates quizzes, and provides contextual
-              answers.
-              Implemented personalized study plans and progress tracking.
-            </p>
-            <div class="tag-row">
-              <span class="tag">React.js</span>
-              <span class="tag">Python</span>
-              <span class="tag">NLP</span>
-            </div>
-            <div class="project-links">
-              <a class="mini-link" href="#" target="_blank" rel="noreferrer noopener">Link</a>
-            </div>
-          </article>
-        </div>
+              <div class="stat-box" data-target="3" data-suffix="+">
+                <div class="font-display text-3xl sm:text-4xl font-bold text-white mb-1 stat-number">03+</div>
+                <div class="font-mono text-xs uppercase tracking-wider text-neutral-400">Internships</div>
+              </div>
 
-        <div class="split-grid">
-          <article class="card" data-reveal>
-            <h3 class="card-title">Achievements</h3>
-            <ul class="bullet">
-              <li>Solved <strong>1000+</strong> problems across platforms including CodeChef, LeetCode and
-                GeeksforGeeks.</li>
-              <li>Achieved a <strong>1100+</strong> rating through consistent participation in competitive contests.
-              </li>
-              <li>Actively participate in weekly coding contests (LeetCode / CodeChef).</li>
-              <li>Total Programming Contests Attended: <strong>90+</strong></li>
-            </ul>
-          </article>
+            </div>
 
-          <article class="card" data-reveal>
-            <h3 class="card-title">Certifications</h3>
-            <ul class="bullet">
-              <li>Web Development Using HTML &amp; CSS — Simplilearn</li>
-              <li>Full-Stack Development — Simplilearn Skillup</li>
-              <li>Salesforce Certified and Agentforce Specialist</li>
-              <li>AWS Academy Cloud Foundations</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="education">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <h2 class="section-title">Education</h2>
-          <p class="section-subtitle">Academic background.</p>
-        </div>
-
-        <article class="card" data-reveal>
-          <div class="row">
-            <h3 class="card-title">B.E. — Computer Science and Engineering</h3>
-            <span class="meta">2023 – 2027</span>
           </div>
-          <p class="muted">
-            KIT — Kalaignarkarunanidhi Institute Of Technology • Coimbatore, India
-            <span class="dot">•</span>
-            CGPA: <strong>7.9</strong>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- 7. SKILLS / TECHNOLOGIES -->
+    <!-- ================================================== -->
+    <section class="py-24 sm:py-32 px-6 sm:px-8 relative border-t border-white/[0.06] overflow-hidden" id="skills">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-xs text-cyan-400 tracking-[0.2em] uppercase font-semibold">02 // CAPABILITIES</span>
+          <span class="h-[1px] flex-1 max-w-[80px] bg-neutral-800"></span>
+          <h2 class="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 font-medium">STACK</h2>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <h3 class="font-display text-3xl sm:text-5xl font-bold uppercase tracking-tight text-white">
+            TECHNOLOGIES I WORK WITH
+          </h3>
+          <p class="text-neutral-400 text-sm sm:text-base max-w-md font-light">
+            An intentionally curated stack chosen for reliability, developer ergonomics, and microsecond-level runtime performance.
           </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <h2 class="section-title">Contact</h2>
-          <p class="section-subtitle">Let’s connect with me.</p>
         </div>
 
-        <div class="contact-grid">
-          <article class="card" data-reveal>
-            <h3 class="card-title">Direct</h3>
-            <div class="contact-item">
-              <span class="muted">Email</span>
-              <a href="mailto:dhinaharmurugesan@gmail.com">dhinaharmurugesan@gmail.com</a>
+        <!-- Categorized Interactive Tech Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          
+          <!-- Category 1: Frontend -->
+          <div class="tech-category-card group">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-xs text-neutral-400 uppercase tracking-wider">01 // CLIENT-SIDE</span>
+              <span class="text-cyan-400/80 font-mono text-xs">WEB APPS</span>
             </div>
-            <div class="contact-item">
-              <span class="muted">Phone</span>
-              <a href="tel:+917810004798">+91 78100 04798</a>
+            <h4 class="font-display text-xl font-bold text-white mb-4">Frontend Engineering</h4>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="tech-pill" data-cursor="hover">React</span>
+              <span class="tech-pill" data-cursor="hover">Next.js</span>
+              <span class="tech-pill" data-cursor="hover">TypeScript</span>
+              <span class="tech-pill" data-cursor="hover">JavaScript</span>
+              <span class="tech-pill" data-cursor="hover">HTML5</span>
+              <span class="tech-pill" data-cursor="hover">CSS3</span>
+              <span class="tech-pill" data-cursor="hover">Tailwind CSS</span>
+              <span class="tech-pill" data-cursor="hover">Bootstrap</span>
             </div>
-            <div class="contact-item">
-              <span class="muted">Location</span>
-              <span>India</span>
+          </div>
+
+          <!-- Category 2: Backend -->
+          <div class="tech-category-card group">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-xs text-neutral-400 uppercase tracking-wider">02 // SERVER-SIDE</span>
+              <span class="text-cyan-400/80 font-mono text-xs">DISTRIBUTED</span>
             </div>
-            <div class="divider"></div>
-            <p class="muted small">
-              Tip: Update your social links in the hero section (LinkedIn/GitHub/LeetCode/CodeChef) for a complete
-              professional profile.
+            <h4 class="font-display text-xl font-bold text-white mb-4">Backend Architecture</h4>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="tech-pill" data-cursor="hover">Java</span>
+              <span class="tech-pill" data-cursor="hover">Python</span>
+              <span class="tech-pill" data-cursor="hover">Node.js</span>
+              <span class="tech-pill" data-cursor="hover">Express.js</span>
+              <span class="tech-pill" data-cursor="hover">Flask</span>
+              <span class="tech-pill" data-cursor="hover">REST APIs</span>
+              <span class="tech-pill" data-cursor="hover">Microservices</span>
+            </div>
+          </div>
+
+          <!-- Category 3: Database -->
+          <div class="tech-category-card group">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-xs text-neutral-400 uppercase tracking-wider">03 // PERSISTENCE</span>
+              <span class="text-cyan-400/80 font-mono text-xs">STORAGE</span>
+            </div>
+            <h4 class="font-display text-xl font-bold text-white mb-4">Database Systems</h4>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="tech-pill" data-cursor="hover">PostgreSQL</span>
+              <span class="tech-pill" data-cursor="hover">MySQL</span>
+              <span class="tech-pill" data-cursor="hover">MongoDB</span>
+              <span class="tech-pill" data-cursor="hover">Supabase</span>
+              <span class="tech-pill" data-cursor="hover">Redis</span>
+            </div>
+          </div>
+
+          <!-- Category 4: AI / ML -->
+          <div class="tech-category-card group">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-xs text-neutral-400 uppercase tracking-wider">04 // INTELLIGENCE</span>
+              <span class="text-cyan-400/80 font-mono text-xs">NEURAL</span>
+            </div>
+            <h4 class="font-display text-xl font-bold text-white mb-4">AI & Machine Learning</h4>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="tech-pill" data-cursor="hover">Python</span>
+              <span class="tech-pill" data-cursor="hover">TensorFlow</span>
+              <span class="tech-pill" data-cursor="hover">PyTorch</span>
+              <span class="tech-pill" data-cursor="hover">Machine Learning</span>
+              <span class="tech-pill" data-cursor="hover">Deep Learning</span>
+              <span class="tech-pill" data-cursor="hover">CNN</span>
+              <span class="tech-pill" data-cursor="hover">NLP</span>
+            </div>
+          </div>
+
+          <!-- Category 5: Tools & DevOps -->
+          <div class="tech-category-card group">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-xs text-neutral-400 uppercase tracking-wider">05 // WORKFLOW</span>
+              <span class="text-cyan-400/80 font-mono text-xs">TOOLCHAIN</span>
+            </div>
+            <h4 class="font-display text-xl font-bold text-white mb-4">Developer Tools</h4>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="tech-pill" data-cursor="hover">Git</span>
+              <span class="tech-pill" data-cursor="hover">GitHub</span>
+              <span class="tech-pill" data-cursor="hover">VS Code</span>
+              <span class="tech-pill" data-cursor="hover">Postman</span>
+              <span class="tech-pill" data-cursor="hover">Docker</span>
+              <span class="tech-pill" data-cursor="hover">Vercel</span>
+            </div>
+          </div>
+
+          <!-- Category 6: DSA & Problem Solving Highlight -->
+          <div class="tech-category-card group border-cyan-500/20 bg-gradient-to-br from-neutral-900/80 to-cyan-950/20">
+            <div class="flex items-center justify-between mb-5">
+              <span class="font-mono text-xs text-cyan-400 uppercase tracking-wider">06 // ALGORITHMS</span>
+              <span class="text-cyan-400 font-mono text-xs">COMPETITIVE</span>
+            </div>
+            <h4 class="font-display text-xl font-bold text-white mb-2">DSA & Problem Solving</h4>
+            <p class="text-neutral-400 text-xs mb-4 leading-relaxed">
+              1000+ solved problems across LeetCode & CodeChef with 90+ competitive contests attended.
             </p>
-          </article>
+            <div class="flex flex-wrap gap-2.5">
+              <span class="tech-pill text-cyan-300 border-cyan-500/30" data-cursor="hover">Data Structures</span>
+              <span class="tech-pill text-cyan-300 border-cyan-500/30" data-cursor="hover">Algorithms</span>
+              <span class="tech-pill text-cyan-300 border-cyan-500/30" data-cursor="hover">OOP</span>
+              <span class="tech-pill text-cyan-300 border-cyan-500/30" data-cursor="hover">Operating Systems</span>
+            </div>
+          </div>
 
-          <article class="card" data-reveal>
-            <h3 class="card-title">Message</h3>
-            <form id="contactForm" class="form">
-              <label class="field">
-                <span class="label">Your name</span>
-                <input required name="name" type="text" placeholder="Enter your name" autocomplete="name" />
-              </label>
-              <label class="field">
-                <span class="label">Your email</span>
-                <input required name="email" type="email" placeholder="name@example.com" autocomplete="email" />
-              </label>
-              <label class="field">
-                <span class="label">Message</span>
-                <textarea required name="message" rows="5" placeholder="Tell me about the opportunity..."></textarea>
-              </label>
-              <div class="form-actions">
-                <button class="btn btn-primary" type="submit">Send</button>
-                <p class="muted small" id="formHint"></p>
-              </div>
-            </form>
-          </article>
         </div>
+
+        <!-- Flowing Infinite Tech Banner -->
+        <div class="flowing-ticker-container py-6 border-y border-white/10 overflow-hidden" aria-hidden="true">
+          <div class="flowing-ticker-track">
+            <span class="ticker-item">REACT.JS</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">NEXT.JS</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">PYTHON</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">JAVA</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">NODE.JS</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">POSTGRESQL</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">TENSORFLOW</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">FLASK</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">DOCKER</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">MONGODB</span>
+            <span class="ticker-sep">•</span>
+            <!-- duplicate for smooth loop -->
+            <span class="ticker-item">REACT.JS</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">NEXT.JS</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">PYTHON</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">JAVA</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">NODE.JS</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">POSTGRESQL</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">TENSORFLOW</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">FLASK</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">DOCKER</span>
+            <span class="ticker-sep">•</span>
+            <span class="ticker-item">MONGODB</span>
+            <span class="ticker-sep">•</span>
+          </div>
+        </div>
+
       </div>
     </section>
+
+    <!-- ================================================== -->
+    <!-- 8. EXPERIENCE SECTION -->
+    <!-- ================================================== -->
+    <section class="py-24 sm:py-32 px-6 sm:px-8 relative border-t border-white/[0.06]" id="experience">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-xs text-cyan-400 tracking-[0.2em] uppercase font-semibold">03 // CHRONOLOGY</span>
+          <span class="h-[1px] flex-1 max-w-[80px] bg-neutral-800"></span>
+          <h2 class="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 font-medium">EXPERIENCE</h2>
+        </div>
+
+        <h3 class="font-display text-3xl sm:text-5xl font-bold uppercase tracking-tight text-white mb-16">
+          PRACTICAL WORK EXPERIENCE
+        </h3>
+
+        <!-- Editorial Timeline -->
+        <div class="relative timeline-container pl-6 sm:pl-10 border-l border-white/10 space-y-16">
+
+          <!-- Experience 01 -->
+          <article class="timeline-entry relative group">
+            <div class="timeline-node" aria-hidden="true"></div>
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-4">
+              <div>
+                <span class="font-mono text-xs text-cyan-400 font-semibold tracking-wider uppercase block mb-1">
+                  FULL STACK DEVELOPER INTERN
+                </span>
+                <h4 class="font-display text-2xl sm:text-3xl font-bold text-white">Codec Technologies</h4>
+              </div>
+              <div class="text-left md:text-right">
+                <span class="font-mono text-xs text-neutral-400 block">01/2026 – 02/2026</span>
+                <span class="font-mono text-xs text-neutral-500 block">Remote</span>
+              </div>
+            </div>
+            <p class="text-neutral-300 text-base leading-relaxed max-w-3xl mb-5 font-light">
+              Worked on developing and maintaining web applications using HTML, CSS, and JavaScript, along with backend frameworks and database integration. Implemented APIs, dynamic features, and responsive design. Collaborated with team members to debug, test, and optimize production code.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip">JavaScript</span>
+              <span class="tech-chip">Backend APIs</span>
+              <span class="tech-chip">SQL / NoSQL</span>
+              <span class="tech-chip">Responsive UI</span>
+              <span class="tech-chip">Git</span>
+            </div>
+          </article>
+
+          <!-- Experience 02 -->
+          <article class="timeline-entry relative group">
+            <div class="timeline-node" aria-hidden="true"></div>
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-4">
+              <div>
+                <span class="font-mono text-xs text-cyan-400 font-semibold tracking-wider uppercase block mb-1">
+                  FRONTEND DEVELOPMENT INTERN
+                </span>
+                <h4 class="font-display text-2xl sm:text-3xl font-bold text-white">Apex Planet</h4>
+              </div>
+              <div class="text-left md:text-right">
+                <span class="font-mono text-xs text-neutral-400 block">09/2025 – 10/2025</span>
+                <span class="font-mono text-xs text-neutral-500 block">Remote</span>
+              </div>
+            </div>
+            <p class="text-neutral-300 text-base leading-relaxed max-w-3xl mb-5 font-light">
+              Delivered a fully responsive and scalable frontend for an e-commerce platform, featuring product browsing, advanced filtering, cart management, and a seamless checkout experience. Focused on performance, clean UI design, and smooth API integration.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip">React.js</span>
+              <span class="tech-chip">State Management</span>
+              <span class="tech-chip">REST Integration</span>
+              <span class="tech-chip">Tailwind CSS</span>
+            </div>
+          </article>
+
+          <!-- Experience 03 -->
+          <article class="timeline-entry relative group">
+            <div class="timeline-node" aria-hidden="true"></div>
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-4">
+              <div>
+                <span class="font-mono text-xs text-cyan-400 font-semibold tracking-wider uppercase block mb-1">
+                  DATA SCIENCE INTERN
+                </span>
+                <h4 class="font-display text-2xl sm:text-3xl font-bold text-white">CIRF</h4>
+              </div>
+              <div class="text-left md:text-right">
+                <span class="font-mono text-xs text-neutral-400 block">06/2025 – 07/2025</span>
+                <span class="font-mono text-xs text-neutral-500 block">Chennai, India</span>
+              </div>
+            </div>
+            <p class="text-neutral-300 text-base leading-relaxed max-w-3xl mb-5 font-light">
+              Analyzed Electric Vehicle Sales data to identify market trends, regional adoption patterns, and factors influencing purchase decisions. Used exploratory data analysis and predictive modeling to provide insights for data-driven sales and marketing strategies.
+            </p>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip">Python</span>
+              <span class="tech-chip">Exploratory Data Analysis</span>
+              <span class="tech-chip">Predictive Modeling</span>
+              <span class="tech-chip">Pandas & Scikit-Learn</span>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- 9 & 10. FEATURED PROJECTS -->
+    <!-- ================================================== -->
+    <section class="py-24 sm:py-32 px-6 sm:px-8 relative border-t border-white/[0.06]" id="projects">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-xs text-cyan-400 tracking-[0.2em] uppercase font-semibold">04 // PORTFOLIO</span>
+          <span class="h-[1px] flex-1 max-w-[80px] bg-neutral-800"></span>
+          <h2 class="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 font-medium">SELECTED WORKS</h2>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20">
+          <h3 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white">
+            FEATURED ENGINEERING PROJECTS
+          </h3>
+          <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest hidden md:block">
+            05 SELECTED CASE STUDIES
+          </span>
+        </div>
+
+        <!-- Project Showcase (Alternating Magazine Layout) -->
+        <div class="space-y-24 sm:space-y-32">
+
+          <!-- PROJECT 01 -->
+          <article class="project-showcase-row grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center group" data-project="ai-voice-os">
+            <!-- Media Visual -->
+            <div class="lg:col-span-7 order-1 lg:order-1">
+              <div class="project-media-frame relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-neutral-900 shadow-2xl" data-cursor="project">
+                <img 
+                  src="ai_voice_os.jpg" 
+                  alt="AI Voice Operating System UI" 
+                  class="project-img w-full aspect-video object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="project-overlay-gradient"></div>
+                <div class="project-corner-pill">
+                  <span class="font-mono text-xs font-semibold text-cyan-300">01 // AUTOMATION</span>
+                </div>
+              </div>
+            </div>
+            <!-- Details Copy -->
+            <div class="lg:col-span-5 order-2 lg:order-2 flex flex-col justify-center">
+              <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase mb-2">PROJECT 01</span>
+              <h4 class="font-display text-2xl sm:text-4xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">
+                AI Voice Operating System
+              </h4>
+              <p class="text-neutral-300 text-base leading-relaxed mb-6 font-light">
+                Control your computer using natural language and voice commands. An autonomous voice-driven orchestration layer that interprets real-time audio input, maps commands to system hooks, and executes automation workflows hands-free.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span class="tech-chip">Python</span>
+                <span class="tech-chip">AI</span>
+                <span class="tech-chip">Voice Recognition</span>
+                <span class="tech-chip">Automation</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <button type="button" class="project-action-btn primary" data-project-id="voice" data-cursor="hover">
+                  <span>Deep Dive</span>
+                  <span class="arrow-rot">↗</span>
+                </button>
+                <a href="https://github.com/dhinahar04" target="_blank" rel="noopener noreferrer" class="project-action-btn secondary" data-cursor="hover">
+                  <span>GitHub</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 02 -->
+          <article class="project-showcase-row grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center group" data-project="nebula-workspace">
+            <!-- Details Copy -->
+            <div class="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center">
+              <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase mb-2">PROJECT 02</span>
+              <h4 class="font-display text-2xl sm:text-4xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">
+                Nebula — AI Workspace Browser
+              </h4>
+              <p class="text-neutral-300 text-base leading-relaxed mb-6 font-light">
+                An AI-native workspace that understands webpages, documents and browser tabs. Enables contextual synthesis, multi-tab cross-referencing, and instantaneous intelligent summarization directly within the browsing runtime.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span class="tech-chip">React</span>
+                <span class="tech-chip">Next.js</span>
+                <span class="tech-chip">AI Inference</span>
+                <span class="tech-chip">Browser APIs</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <button type="button" class="project-action-btn primary" data-project-id="nebula" data-cursor="hover">
+                  <span>Deep Dive</span>
+                  <span class="arrow-rot">↗</span>
+                </button>
+                <a href="https://github.com/dhinahar04" target="_blank" rel="noopener noreferrer" class="project-action-btn secondary" data-cursor="hover">
+                  <span>GitHub</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+            <!-- Media Visual -->
+            <div class="lg:col-span-7 order-1 lg:order-2">
+              <div class="project-media-frame relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-neutral-900 shadow-2xl" data-cursor="project">
+                <img 
+                  src="nebula_browser.jpg" 
+                  alt="Nebula AI Workspace Browser Interface" 
+                  class="project-img w-full aspect-video object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="project-overlay-gradient"></div>
+                <div class="project-corner-pill">
+                  <span class="font-mono text-xs font-semibold text-cyan-300">02 // WORKSPACE</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 03 -->
+          <article class="project-showcase-row grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center group" data-project="phishing-detection">
+            <!-- Media Visual -->
+            <div class="lg:col-span-7 order-1 lg:order-1">
+              <div class="project-media-frame relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-neutral-900 shadow-2xl" data-cursor="project">
+                <img 
+                  src="phishing.png" 
+                  alt="Phishing Email Detection Project" 
+                  class="project-img w-full aspect-video object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="project-overlay-gradient"></div>
+                <div class="project-corner-pill">
+                  <span class="font-mono text-xs font-semibold text-cyan-300">03 // CYBERSECURITY</span>
+                </div>
+              </div>
+            </div>
+            <!-- Details Copy -->
+            <div class="lg:col-span-5 order-2 lg:order-2 flex flex-col justify-center">
+              <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase mb-2">PROJECT 03</span>
+              <h4 class="font-display text-2xl sm:text-4xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">
+                Phishing Email Detection
+              </h4>
+              <p class="text-neutral-300 text-base leading-relaxed mb-6 font-light">
+                Machine learning powered phishing email detection system. Parses raw headers, email body semantics, and embedded URL risk scores using natural language processing to safeguard corporate communications in real-time.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span class="tech-chip">Python</span>
+                <span class="tech-chip">Flask</span>
+                <span class="tech-chip">Machine Learning</span>
+                <span class="tech-chip">NLP</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <button type="button" class="project-action-btn primary" data-project-id="phishing" data-cursor="hover">
+                  <span>Deep Dive</span>
+                  <span class="arrow-rot">↗</span>
+                </button>
+                <a href="https://github.com/dhinahar04/phishing_email_detector" target="_blank" rel="noopener noreferrer" class="project-action-btn secondary" data-cursor="hover">
+                  <span>GitHub</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 04 -->
+          <article class="project-showcase-row grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center group" data-project="flood-detection">
+            <!-- Details Copy -->
+            <div class="lg:col-span-5 order-2 lg:order-1 flex flex-col justify-center">
+              <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase mb-2">PROJECT 04</span>
+              <h4 class="font-display text-2xl sm:text-4xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">
+                Flood Detection System
+              </h4>
+              <p class="text-neutral-300 text-base leading-relaxed mb-6 font-light">
+                Deep learning based flood image detection system. Employs Convolutional Neural Networks (CNN) over satellite and terrestrial drone feeds to classify inundation levels, supporting rapid emergency response teams.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span class="tech-chip">Python</span>
+                <span class="tech-chip">CNN</span>
+                <span class="tech-chip">TensorFlow</span>
+                <span class="tech-chip">Computer Vision</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <button type="button" class="project-action-btn primary" data-project-id="flood" data-cursor="hover">
+                  <span>Deep Dive</span>
+                  <span class="arrow-rot">↗</span>
+                </button>
+                <a href="https://github.com/dhinahar04" target="_blank" rel="noopener noreferrer" class="project-action-btn secondary" data-cursor="hover">
+                  <span>GitHub</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+            <!-- Media Visual -->
+            <div class="lg:col-span-7 order-1 lg:order-2">
+              <div class="project-media-frame relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-neutral-900 shadow-2xl" data-cursor="project">
+                <img 
+                  src="flood_detection.jpg" 
+                  alt="Flood Detection System Dashboard" 
+                  class="project-img w-full aspect-video object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="project-overlay-gradient"></div>
+                <div class="project-corner-pill">
+                  <span class="font-mono text-xs font-semibold text-cyan-300">04 // COMPUTER VISION</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 05 -->
+          <article class="project-showcase-row grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center group" data-project="smart-hostel">
+            <!-- Media Visual -->
+            <div class="lg:col-span-7 order-1 lg:order-1">
+              <div class="project-media-frame relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-neutral-900 shadow-2xl" data-cursor="project">
+                <img 
+                  src="smart_hostel.jpg" 
+                  alt="Smart Hostel Leave Management Platform" 
+                  class="project-img w-full aspect-video object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div class="project-overlay-gradient"></div>
+                <div class="project-corner-pill">
+                  <span class="font-mono text-xs font-semibold text-cyan-300">05 // ENTERPRISE</span>
+                </div>
+              </div>
+            </div>
+            <!-- Details Copy -->
+            <div class="lg:col-span-5 order-2 lg:order-2 flex flex-col justify-center">
+              <span class="font-mono text-xs tracking-widest text-cyan-400 uppercase mb-2">PROJECT 05</span>
+              <h4 class="font-display text-2xl sm:text-4xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">
+                Smart Hostel Leave System
+              </h4>
+              <p class="text-neutral-300 text-base leading-relaxed mb-6 font-light">
+                Digital leave and gate-pass approval platform. Streamlines multi-tier approvals between students, wardens, and parents with QR code verification, instant audit trails, and automated parent notifications.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span class="tech-chip">React</span>
+                <span class="tech-chip">Node.js</span>
+                <span class="tech-chip">PostgreSQL</span>
+                <span class="tech-chip">QR Gatepass</span>
+              </div>
+              <div class="flex items-center gap-4">
+                <button type="button" class="project-action-btn primary" data-project-id="hostel" data-cursor="hover">
+                  <span>Deep Dive</span>
+                  <span class="arrow-rot">↗</span>
+                </button>
+                <a href="https://github.com/dhinahar04" target="_blank" rel="noopener noreferrer" class="project-action-btn secondary" data-cursor="hover">
+                  <span>GitHub</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- 11. SERVICES / WHAT I DO -->
+    <!-- ================================================== -->
+    <section class="py-24 sm:py-32 px-6 sm:px-8 relative border-t border-white/[0.06]" id="services">
+      <div class="max-w-7xl mx-auto">
+        
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-xs text-cyan-400 tracking-[0.2em] uppercase font-semibold">05 // DISCIPLINES</span>
+          <span class="h-[1px] flex-1 max-w-[80px] bg-neutral-800"></span>
+          <h2 class="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 font-medium">WHAT I DO</h2>
+        </div>
+
+        <h3 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-white mb-16">
+          ENGINEERING DISCIPLINES
+        </h3>
+
+        <!-- Four Large Minimal Editorial Rows -->
+        <div class="service-list divide-y divide-white/10">
+
+          <!-- Item 01 -->
+          <div class="service-row py-10 sm:py-14 group cursor-pointer transition-colors" data-cursor="hover">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div class="lg:col-span-2">
+                <span class="font-mono text-sm text-neutral-500 group-hover:text-cyan-400 transition-colors font-semibold">
+                  01 //
+                </span>
+              </div>
+              <div class="lg:col-span-6">
+                <h4 class="font-display text-2xl sm:text-4xl font-bold text-white group-hover:translate-x-3 transition-transform duration-300">
+                  FULL STACK DEVELOPMENT
+                </h4>
+              </div>
+              <div class="lg:col-span-3">
+                <p class="text-neutral-400 text-sm leading-relaxed font-light">
+                  Architecting end-to-end web applications with React, Next.js, Node.js and TypeScript. Built for responsive fluidity and peak Lighthouse metrics.
+                </p>
+              </div>
+              <div class="lg:col-span-1 text-right hidden lg:block">
+                <span class="text-2xl text-neutral-600 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all inline-block">
+                  →
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 02 -->
+          <div class="service-row py-10 sm:py-14 group cursor-pointer transition-colors" data-cursor="hover">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div class="lg:col-span-2">
+                <span class="font-mono text-sm text-neutral-500 group-hover:text-cyan-400 transition-colors font-semibold">
+                  02 //
+                </span>
+              </div>
+              <div class="lg:col-span-6">
+                <h4 class="font-display text-2xl sm:text-4xl font-bold text-white group-hover:translate-x-3 transition-transform duration-300">
+                  BACKEND DEVELOPMENT
+                </h4>
+              </div>
+              <div class="lg:col-span-3">
+                <p class="text-neutral-400 text-sm leading-relaxed font-light">
+                  Engineering robust REST APIs, microservices, and database layers with Java, Python, PostgreSQL, and Express. Optimized for concurrency and security.
+                </p>
+              </div>
+              <div class="lg:col-span-1 text-right hidden lg:block">
+                <span class="text-2xl text-neutral-600 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all inline-block">
+                  →
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 03 -->
+          <div class="service-row py-10 sm:py-14 group cursor-pointer transition-colors" data-cursor="hover">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div class="lg:col-span-2">
+                <span class="font-mono text-sm text-neutral-500 group-hover:text-cyan-400 transition-colors font-semibold">
+                  03 //
+                </span>
+              </div>
+              <div class="lg:col-span-6">
+                <h4 class="font-display text-2xl sm:text-4xl font-bold text-white group-hover:translate-x-3 transition-transform duration-300">
+                  AI / MACHINE LEARNING
+                </h4>
+              </div>
+              <div class="lg:col-span-3">
+                <p class="text-neutral-400 text-sm leading-relaxed font-light">
+                  Building deep learning vision models, NLP classification pipelines, and voice automation agents with Python, TensorFlow, and PyTorch.
+                </p>
+              </div>
+              <div class="lg:col-span-1 text-right hidden lg:block">
+                <span class="text-2xl text-neutral-600 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all inline-block">
+                  →
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 04 -->
+          <div class="service-row py-10 sm:py-14 group cursor-pointer transition-colors" data-cursor="hover">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div class="lg:col-span-2">
+                <span class="font-mono text-sm text-neutral-500 group-hover:text-cyan-400 transition-colors font-semibold">
+                  04 //
+                </span>
+              </div>
+              <div class="lg:col-span-6">
+                <h4 class="font-display text-2xl sm:text-4xl font-bold text-white group-hover:translate-x-3 transition-transform duration-300">
+                  UI / DIGITAL EXPERIENCES
+                </h4>
+              </div>
+              <div class="lg:col-span-3">
+                <p class="text-neutral-400 text-sm leading-relaxed font-light">
+                  Crafting memorable, cinematic web interfaces with bespoke motion design, spring physics, glassmorphism, and responsive editorial typography.
+                </p>
+              </div>
+              <div class="lg:col-span-1 text-right hidden lg:block">
+                <span class="text-2xl text-neutral-600 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all inline-block">
+                  →
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <!-- 12. CONTACT SECTION -->
+    <!-- ================================================== -->
+    <section class="py-28 sm:py-36 px-6 sm:px-8 relative border-t border-white/[0.06] overflow-hidden" id="contact">
+      
+      <!-- Ambient Glow for Finale -->
+      <div class="contact-ambient-glow" aria-hidden="true"></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <div class="flex items-center gap-3 mb-8">
+          <span class="font-mono text-xs text-cyan-400 tracking-[0.2em] uppercase font-semibold">06 // CONNECTION</span>
+          <span class="h-[1px] flex-1 max-w-[80px] bg-neutral-800"></span>
+          <h2 class="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 font-medium">CONTACT</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          
+          <!-- Left: Dramatic Statement & Direct Info -->
+          <div class="lg:col-span-7 flex flex-col justify-between">
+            <div>
+              <h3 class="font-display text-4xl sm:text-6xl xl:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.95] mb-8">
+                LET'S BUILD <br />
+                SOMETHING <br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-indigo-400">
+                  GREAT.
+                </span>
+              </h3>
+
+              <p class="text-lg sm:text-xl text-neutral-300 max-w-lg font-light leading-relaxed mb-10">
+                Have an idea, project or opportunity? <br />
+                Let's talk. I'm always open to discussing new engineering challenges, internships, and collaborations.
+              </p>
+
+              <!-- Fast Contact Badges -->
+              <div class="flex flex-col gap-4 mb-12">
+                <button type="button" class="copy-email-box group text-left" id="copyEmailBtn" data-email="dhinaharmurugesan@gmail.com" data-cursor="hover">
+                  <span class="font-mono text-xs text-neutral-500 uppercase block mb-1">DIRECT INBOX</span>
+                  <div class="flex items-center justify-between">
+                    <span class="font-mono text-base sm:text-lg text-white group-hover:text-cyan-300 transition-colors">
+                      dhinaharmurugesan@gmail.com
+                    </span>
+                    <span class="copy-status-text font-mono text-xs text-cyan-400 bg-cyan-950/40 border border-cyan-800/40 px-2.5 py-1 rounded-md">
+                      Click to Copy
+                    </span>
+                  </div>
+                </button>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="contact-info-pill">
+                    <span class="font-mono text-xs text-neutral-500 block">PHONE / WHATSAPP</span>
+                    <a href="tel:+917810004798" class="font-mono text-sm text-neutral-200 hover:text-white transition-colors">
+                      +91 78100 04798
+                    </a>
+                  </div>
+                  <div class="contact-info-pill">
+                    <span class="font-mono text-xs text-neutral-500 block">LOCATION</span>
+                    <span class="font-mono text-sm text-neutral-200">
+                      Coimbatore, India
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Links Row -->
+            <div class="pt-8 border-t border-white/10">
+              <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest block mb-4">CONNECT ONLINE</span>
+              <div class="flex flex-wrap gap-4">
+                <a href="https://github.com/dhinahar04" target="_blank" rel="noopener noreferrer" class="social-badge group" data-cursor="hover">
+                  <span>GitHub</span>
+                  <span class="text-neutral-500 group-hover:text-white transition-colors">↗</span>
+                </a>
+                <a href="https://www.linkedin.com/in/dhinahar-murugesan-69a6342a5/" target="_blank" rel="noopener noreferrer" class="social-badge group" data-cursor="hover">
+                  <span>LinkedIn</span>
+                  <span class="text-neutral-500 group-hover:text-white transition-colors">↗</span>
+                </a>
+                <a href="https://leetcode.com/u/Dhinahar_18/" target="_blank" rel="noopener noreferrer" class="social-badge group" data-cursor="hover">
+                  <span>LeetCode</span>
+                  <span class="text-neutral-500 group-hover:text-white transition-colors">↗</span>
+                </a>
+                <a href="https://www.codechef.com/users/dhinahar_4" target="_blank" rel="noopener noreferrer" class="social-badge group" data-cursor="hover">
+                  <span>CodeChef</span>
+                  <span class="text-neutral-500 group-hover:text-white transition-colors">↗</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: Interactive Direct Message Form -->
+          <div class="lg:col-span-5">
+            <div class="contact-card-glass p-8 sm:p-10 rounded-3xl border border-white/10 bg-neutral-900/60 backdrop-blur-xl shadow-2xl">
+              <h4 class="font-display text-2xl font-bold text-white mb-2">Send a Message</h4>
+              <p class="text-sm text-neutral-400 mb-8 font-light">
+                Fill out the form below and I'll get back to you within 24 hours.
+              </p>
+
+              <form id="contactForm" class="space-y-6" action="mailto:dhinaharmurugesan@gmail.com" method="POST" enctype="text/plain">
+                <div>
+                  <label for="formName" class="font-mono text-xs text-neutral-400 uppercase tracking-wider block mb-2">Your Name</label>
+                  <input 
+                    type="text" 
+                    id="formName" 
+                    name="name" 
+                    required 
+                    placeholder="Enter your name" 
+                    class="form-input-field" 
+                  />
+                </div>
+
+                <div>
+                  <label for="formEmail" class="font-mono text-xs text-neutral-400 uppercase tracking-wider block mb-2">Email Address</label>
+                  <input 
+                    type="email" 
+                    id="formEmail" 
+                    name="email" 
+                    required 
+                    placeholder="name@company.com" 
+                    class="form-input-field" 
+                  />
+                </div>
+
+                <div>
+                  <label for="formMessage" class="font-mono text-xs text-neutral-400 uppercase tracking-wider block mb-2">Project Brief / Message</label>
+                  <textarea 
+                    id="formMessage" 
+                    name="message" 
+                    rows="4" 
+                    required 
+                    placeholder="Tell me about your project, timeline, or open role..." 
+                    class="form-input-field resize-none"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="submit-form-btn w-full group" data-cursor="hover">
+                  <span>Start a Conversation</span>
+                  <span class="group-hover:translate-x-1 transition-transform">↗</span>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p class="muted small">© <span id="year"></span> Dhinahar M. Built with HTML, CSS &amp; JavaScript.</p>
-      <a class="link" href="#top">Back to top</a>
+  <!-- ================================================== -->
+  <!-- 13. FOOTER -->
+  <!-- ================================================== -->
+  <footer class="py-14 px-6 sm:px-8 border-t border-white/10 bg-black/40 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-center sm:text-left">
+        <a href="#hero" class="font-display font-bold text-xl text-white tracking-tight hover:text-cyan-400 transition-colors" data-cursor="hover">
+          DHINAHAR M
+        </a>
+        <span class="hidden sm:inline text-neutral-700">|</span>
+        <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest">
+          FULL STACK DEVELOPER
+        </span>
+      </div>
+
+      <div class="flex items-center gap-6 font-mono text-xs text-neutral-400">
+        <a href="https://github.com/dhinahar04" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="hover">GitHub</a>
+        <a href="https://www.linkedin.com/in/dhinahar-murugesan-69a6342a5/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors" data-cursor="hover">LinkedIn</a>
+        <a href="mailto:dhinaharmurugesan@gmail.com" class="hover:text-white transition-colors" data-cursor="hover">Email</a>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <p class="font-mono text-xs text-neutral-500">
+          © 2026 Dhinahar M. All rights reserved.
+        </p>
+        <button type="button" class="back-to-top-btn" id="backToTopBtn" title="Back to top" aria-label="Scroll back to top" data-cursor="hover">
+          ↑
+        </button>
+      </div>
+
     </div>
   </footer>
 
-  <button class="to-top" type="button" id="toTop" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-      <path d="M12 5v14M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round" />
-    </svg>
-  </button>
-
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- Modals -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal-backdrop" data-modal-close></div>
-    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-head">
-        <h3 class="modal-title" id="modalTitle">Project</h3>
-        <button class="icon-btn" type="button" data-modal-close aria-label="Close">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          </svg>
+  <!-- ================================================== -->
+  <!-- INTERACTIVE PROJECT DETAILS MODAL -->
+  <!-- ================================================== -->
+  <div class="project-modal-backdrop" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="project-modal-dialog">
+      <div class="project-modal-header">
+        <div class="flex items-center gap-3">
+          <span class="modal-project-badge font-mono text-xs text-cyan-400" id="modalBadge">PROJECT 01</span>
+          <h3 class="font-display text-xl sm:text-2xl font-bold text-white" id="modalTitle">Project Title</h3>
+        </div>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close project modal" data-cursor="hover">
+          ✕
         </button>
       </div>
-      <div class="modal-body" id="modalBody"></div>
+
+      <div class="project-modal-body">
+        <div class="modal-img-container mb-6 rounded-2xl overflow-hidden border border-white/10 bg-neutral-900">
+          <img src="" alt="" id="modalImg" class="w-full aspect-video object-cover" />
+        </div>
+        
+        <p class="text-neutral-300 text-base leading-relaxed mb-6 font-light" id="modalDesc">
+          Detailed project description will appear here.
+        </p>
+
+        <div class="mb-6">
+          <h5 class="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-3">Architectural Highlights</h5>
+          <ul class="space-y-2 text-sm text-neutral-300 font-light list-disc list-inside" id="modalHighlights">
+            <li>High performance asynchronous pipeline</li>
+            <li>End-to-end integration and responsive design</li>
+          </ul>
+        </div>
+
+        <div class="mb-8">
+          <h5 class="font-mono text-xs uppercase tracking-widest text-neutral-400 mb-3">Technologies Deployed</h5>
+          <div class="flex flex-wrap gap-2" id="modalTechStack"></div>
+        </div>
+
+        <div class="flex items-center gap-4 pt-4 border-t border-white/10" id="modalLinks">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="primary-btn text-xs py-3 px-6" id="modalLiveLink" data-cursor="hover">
+            <span>View Repository</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script src="script.js" defer></script>
-</body>
+  <!-- Toast Notification element -->
+  <div class="toast-notification" id="toastNotice" role="status" aria-live="polite">
+    <span class="toast-icon">✓</span>
+    <span class="toast-msg" id="toastMsg">Email copied to clipboard!</span>
+  </div>
 
+  <!-- Main JavaScript Bundle -->
+  <script src="script.js"></script>
+</body>
 </html>

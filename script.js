@@ -1,393 +1,660 @@
-(() => {
-  const qs = (s, el = document) => el.querySelector(s);
-  const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
+/**
+ * DHINAHAR M — PORTFOLIO JAVASCRIPT ENGINE
+ * Features: Lenis Smooth Scroll, Cinematic Preloader, Custom Magnetic Cursor,
+ * Dynamic Word Ticker, Interactive Project Modal, Audio Feedback & Confetti.
+ */
 
-  const html = document.documentElement;
-  const toast = qs("#toast");
+document.addEventListener('DOMContentLoaded', () => {
+  'use strict';
 
-  function showToast(message) {
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add("is-visible");
-    window.clearTimeout(showToast._t);
-    showToast._t = window.setTimeout(() => toast.classList.remove("is-visible"), 1700);
+  /* ==================================================
+     1. SOUND EFFECTS SYNTHESIZER (WEB AUDIO API)
+     ================================================== */
+  let audioCtx = null;
+  let isMuted = localStorage.getItem('dhinahar_sound_muted') === 'true';
+
+  const initAudio = () => {
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtx = new AudioContextClass();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  };
+
+  const playHoverTick = () => {
+    if (isMuted || !audioCtx) return;
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1400, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.03);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.03);
+    } catch (e) {
+      // Audio error ignored silently
+    }
+  };
+
+  const playClickPop = () => {
+    if (isMuted || !audioCtx) return;
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.06);
+      gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.06);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.06);
+    } catch (e) {
+      // Audio error ignored silently
+    }
+  };
+
+  // Sound toggle button setup
+  const soundToggleBtn = document.getElementById('soundToggle');
+  if (soundToggleBtn) {
+    const soundOnIcon = soundToggleBtn.querySelector('.sound-icon-on');
+    const soundOffIcon = soundToggleBtn.querySelector('.sound-icon-off');
+
+    const updateSoundUI = () => {
+      if (isMuted) {
+        soundOnIcon?.classList.add('hidden');
+        soundOffIcon?.classList.remove('hidden');
+        soundToggleBtn.setAttribute('aria-label', 'Unmute sound effects');
+      } else {
+        soundOnIcon?.classList.remove('hidden');
+        soundOffIcon?.classList.add('hidden');
+        soundToggleBtn.setAttribute('aria-label', 'Mute sound effects');
+      }
+    };
+    updateSoundUI();
+
+    soundToggleBtn.addEventListener('click', () => {
+      initAudio();
+      isMuted = !isMuted;
+      localStorage.setItem('dhinahar_sound_muted', isMuted);
+      updateSoundUI();
+      if (!isMuted) playClickPop();
+    });
   }
 
-  function getPreferredTheme() {
-    const saved = localStorage.getItem("theme");
-    if (saved === "light" || saved === "dark") return saved;
-    return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches ? "dark" : "light";
+  // First user interaction unblocks AudioContext
+  window.addEventListener('click', initAudio, { once: true });
+  window.addEventListener('touchstart', initAudio, { once: true });
+
+  /* ==================================================
+     2. LENIS SMOOTH SCROLLING
+     ================================================== */
+  let lenis = null;
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.5,
+      infinite: false
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Smooth anchor navigation
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          playClickPop();
+          lenis.scrollTo(targetEl, { offset: -60 });
+        }
+      });
+    });
   }
 
-  function setTheme(theme) {
-    html.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+  /* ==================================================
+     3. INTRO / CINEMATIC LOADING SCREEN
+     ================================================== */
+  const loaderOverlay = document.getElementById('loaderOverlay');
+  const loaderPercent = document.getElementById('loaderPercent');
+  const loaderFill = document.getElementById('loaderFill');
+  const hasLoadedBefore = sessionStorage.getItem('dhinahar_portfolio_loaded');
+
+  const startHeroAnimations = () => {
+    const revealItems = document.querySelectorAll('.hero-section .reveal-item');
+    revealItems.forEach((item, idx) => {
+      setTimeout(() => {
+        item.classList.add('revealed');
+      }, 100 + idx * 120);
+    });
+  };
+
+  if (hasLoadedBefore && loaderOverlay) {
+    // Fast skip for subsequent navigations in the same session
+    loaderOverlay.classList.add('is-loaded');
+    startHeroAnimations();
+  } else if (loaderOverlay && loaderPercent && loaderFill) {
+    let currentPercent = 0;
+    const duration = 1400; // ms
+    const startTime = performance.now();
+
+    const animateLoader = (time) => {
+      const elapsed = time - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out quartic
+      const easeProgress = 1 - Math.pow(1 - progress, 4);
+      currentPercent = Math.floor(easeProgress * 100);
+
+      loaderPercent.textContent = `${currentPercent.toString().padStart(2, '0')}%`;
+      loaderFill.style.width = `${currentPercent}%`;
+
+      if (progress < 1) {
+        requestAnimationFrame(animateLoader);
+      } else {
+        setTimeout(() => {
+          loaderOverlay.classList.add('is-loaded');
+          sessionStorage.setItem('dhinahar_portfolio_loaded', 'true');
+          startHeroAnimations();
+          if (!isMuted) playClickPop();
+        }, 250);
+      }
+    };
+    requestAnimationFrame(animateLoader);
   }
 
-  // Ultra-Premium Custom Cursor
-  const aura = qs("#cursorAura");
-  let auraX = 0, auraY = 0, mouseX = 0, mouseY = 0;
+  /* ==================================================
+     4. CUSTOM CURSOR (DESKTOP ONLY)
+     ================================================== */
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorFollower = document.getElementById('cursorFollower');
 
-  if (aura && window.matchMedia?.("(pointer: fine)")?.matches) {
-    document.addEventListener("mousemove", (e) => {
+  if (cursorDot && cursorFollower && window.matchMedia('(pointer: fine)').matches) {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let followerX = mouseX;
+    let followerY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      aura.style.opacity = "1";
+      cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
     });
 
-    const animateAura = () => {
-      auraX += (mouseX - auraX - 20) * 0.15;
-      auraY += (mouseY - auraY - 20) * 0.15;
-      aura.style.transform = `translate3d(${auraX}px, ${auraY}px, 0)`;
-      requestAnimationFrame(animateAura);
+    const renderCursor = () => {
+      followerX += (mouseX - followerX) * 0.15;
+      followerY += (mouseY - followerY) * 0.15;
+      cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+      requestAnimationFrame(renderCursor);
     };
-    animateAura();
+    requestAnimationFrame(renderCursor);
 
-    // Hover effect for interactive elements
-    const interactives = qsa("a, button, .chip, .card, [data-modal-open]");
-    interactives.forEach(el => {
-      el.addEventListener("mouseenter", () => aura.classList.add("active"));
-      el.addEventListener("mouseleave", () => aura.classList.remove("active"));
+    // Hover detection
+    const attachCursorEvents = () => {
+      document.querySelectorAll('a, button, [data-cursor="hover"]').forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          cursorFollower.classList.add('is-hovering');
+          playHoverTick();
+        });
+        el.addEventListener('mouseleave', () => {
+          cursorFollower.classList.remove('is-hovering');
+        });
+      });
+
+      document.querySelectorAll('[data-cursor="project"]').forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          cursorFollower.classList.add('is-project');
+          playHoverTick();
+        });
+        el.addEventListener('mouseleave', () => {
+          cursorFollower.classList.remove('is-project');
+        });
+      });
+    };
+    attachCursorEvents();
+  }
+
+  /* ==================================================
+     5. HERO DYNAMIC TICKER (ANIMATED WORDS)
+     ================================================== */
+  const dynamicTicker = document.getElementById('dynamicTicker');
+  if (dynamicTicker) {
+    const words = dynamicTicker.querySelectorAll('.ticker-word');
+    let currentIndex = 0;
+
+    setInterval(() => {
+      const currentWord = words[currentIndex];
+      currentWord.classList.remove('active');
+      currentWord.classList.add('exiting');
+
+      currentIndex = (currentIndex + 1) % words.length;
+      const nextWord = words[currentIndex];
+      nextWord.classList.remove('exiting');
+      nextWord.classList.add('active');
+
+      setTimeout(() => {
+        currentWord.classList.remove('exiting');
+      }, 500);
+    }, 2400);
+  }
+
+  /* ==================================================
+     6. 3D MOUSE PARALLAX ON HERO PORTRAIT
+     ================================================== */
+  const portraitWrap = document.getElementById('heroPortraitWrap');
+  if (portraitWrap && window.matchMedia('(pointer: fine)').matches) {
+    portraitWrap.addEventListener('mousemove', (e) => {
+      const rect = portraitWrap.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      portraitWrap.style.transform = `perspective(1000px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateY(-4px)`;
+    });
+
+    portraitWrap.addEventListener('mouseleave', () => {
+      portraitWrap.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateY(0px)';
+      portraitWrap.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+
+    portraitWrap.addEventListener('mouseenter', () => {
+      portraitWrap.style.transition = 'none';
     });
   }
 
-  // Theme init (early as possible)
-  setTheme(getPreferredTheme());
+  /* ==================================================
+     7. NAVBAR SCROLL EFFECT & ACTIVE SPY
+     ================================================== */
+  const mainNavbar = document.getElementById('mainNavbar');
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-  // Theme toggle
-  const themeToggle = qs("#themeToggle");
-  themeToggle?.addEventListener("click", () => {
-    const current = html.getAttribute("data-theme") || "dark";
-    setTheme(current === "dark" ? "light" : "dark");
-  });
+  const onScroll = () => {
+    const scrollY = window.scrollY;
 
-  // Mobile nav
-  const navToggle = qs(".nav-toggle");
-  const navMenu = qs("#nav-menu");
-  const navLinks = qsa(".nav-link");
-
-  function setNavOpen(open) {
-    if (!navToggle || !navMenu) return;
-    navToggle.setAttribute("aria-expanded", String(open));
-    navMenu.classList.toggle("is-open", open);
-    if (open) navLinks[0]?.focus?.();
-  }
-
-  navToggle?.addEventListener("click", () => {
-    const expanded = navToggle.getAttribute("aria-expanded") === "true";
-    setNavOpen(!expanded);
-  });
-
-  // Close nav on link click (mobile)
-  navLinks.forEach((a) => {
-    a.addEventListener("click", () => setNavOpen(false));
-  });
-
-  // Close nav on outside click / escape
-  document.addEventListener("click", (e) => {
-    if (!navMenu || !navToggle) return;
-    const isOpen = navMenu.classList.contains("is-open");
-    if (!isOpen) return;
-    const target = e.target;
-    if (target instanceof Node && !navMenu.contains(target) && !navToggle.contains(target)) {
-      setNavOpen(false);
-    }
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setNavOpen(false);
-  });
-
-  // Smooth scrolling (native, but ensure focus)
-  navLinks.forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href") || "";
-      if (!href.startsWith("#")) return;
-      const id = href.slice(1);
-      const target = qs(`#${CSS.escape(id)}`);
-      if (!target) return;
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      target.setAttribute("tabindex", "-1");
-      target.focus({ preventScroll: true });
-      window.setTimeout(() => target.removeAttribute("tabindex"), 800);
-    });
-  });
-
-  // Scroll spy (active nav link) - stable calculation (fixes "Education always active" issue)
-  const header = qs(".site-header");
-  const sections = qsa("main section[id]");
-  const navById = new Map(
-    navLinks
-      .map((a) => {
-        const href = a.getAttribute("href") || "";
-        return [href.startsWith("#") ? href.slice(1) : "", a];
-      })
-      .filter(([id]) => id)
-  );
-
-  let activeId = "";
-  let spyTicking = false;
-
-  function setActiveNav(id) {
-    if (!id || id === activeId) return;
-    activeId = id;
-    navLinks.forEach((a) => a.classList.remove("is-active"));
-    navById.get(id)?.classList.add("is-active");
-  }
-
-  function computeActiveSection() {
-    const headerH = header?.offsetHeight ?? 80;
-    const y = headerH + 18;
-    let chosen = sections[0]?.id || "";
-
-    for (const s of sections) {
-      const r = s.getBoundingClientRect();
-      const top = r.top;
-      const bottom = r.bottom;
-      // If the section crosses the "reading line" just under the sticky header, it's the active one
-      if (top <= y && bottom > y) {
-        chosen = s.id;
-        break;
+    if (mainNavbar) {
+      if (scrollY > 50) {
+        mainNavbar.classList.add('scrolled');
+      } else {
+        mainNavbar.classList.remove('scrolled');
       }
-      // If we've scrolled past a section, keep it as the candidate
-      if (top <= y) chosen = s.id;
     }
-    setActiveNav(chosen);
-  }
 
-  function onSpyScroll() {
-    if (spyTicking) return;
-    spyTicking = true;
-    requestAnimationFrame(() => {
-      computeActiveSection();
-      spyTicking = false;
+    // Active link highlighting
+    let currentSectionId = '';
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 180;
+      const sectionHeight = section.offsetHeight;
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        currentSectionId = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${currentSectionId}`) {
+        link.classList.add('active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ==================================================
+     8. MOBILE MENU DRAWER
+     ================================================== */
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (mobileMenuBtn && mobileDrawer) {
+    const toggleMenu = (open) => {
+      const isOpen = open !== undefined ? open : !mobileMenuBtn.classList.contains('is-open');
+      mobileMenuBtn.classList.toggle('is-open', isOpen);
+      mobileDrawer.classList.toggle('is-open', isOpen);
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen.toString());
+      mobileDrawer.setAttribute('aria-hidden', (!isOpen).toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (isOpen && lenis) lenis.stop();
+      if (!isOpen && lenis) lenis.start();
+    };
+
+    mobileMenuBtn.addEventListener('click', () => {
+      playClickPop();
+      toggleMenu();
+    });
+
+    mobileNavLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        toggleMenu(false);
+      });
     });
   }
 
-  window.addEventListener("scroll", onSpyScroll, { passive: true });
-  window.addEventListener("resize", onSpyScroll);
-  computeActiveSection();
-
-  // Reveal animations with staggered delay
-  const revealEls = qsa("[data-reveal]");
-  const reveal = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          const delay = e.target.getAttribute("data-reveal-delay") || "0ms";
-          e.target.style.transitionDelay = delay;
-          e.target.classList.add("is-visible");
-          reveal.unobserve(e.target);
+  /* ==================================================
+     9. INTERSECTION OBSERVER FOR SCROLL REVEALS & STATS
+     ================================================== */
+  // Generic scroll reveals
+  const revealElements = document.querySelectorAll('.reveal-item:not(.hero-section .reveal-item)');
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+    { threshold: 0.15 }
   );
-  revealEls.forEach((el) => reveal.observe(el));
+  revealElements.forEach((el) => revealObserver.observe(el));
 
-  // Background & Hero Parallax
-  const hero = qs(".hero");
-  const heroMedia = qs(".portrait-card");
-  const heroTitle = qs(".hero-title");
+  // Animated numbers in stats boxes
+  const statBoxes = document.querySelectorAll('.stat-box');
+  const statObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const statBox = entry.target;
+          const targetNum = parseInt(statBox.getAttribute('data-target') || '0', 10);
+          const suffix = statBox.getAttribute('data-suffix') || '';
+          const numEl = statBox.querySelector('.stat-number');
 
-  if (hero && window.matchMedia?.("(pointer: fine)")?.matches) {
-    document.addEventListener("mousemove", (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+          if (numEl) {
+            let start = 0;
+            const countDuration = 1200;
+            const startTime = performance.now();
 
-      // Multi-layered parallax
-      hero.style.setProperty("--mx", `${x * 15}px`);
-      hero.style.setProperty("--my", `${y * 15}px`);
-
-      if (heroMedia) heroMedia.style.transform = `translate3d(${x * 30}px, ${y * 30}px, 0) scale(1.02)`;
-      if (heroTitle) heroTitle.style.transform = `translate3d(${x * -10}px, ${y * -10}px, 0)`;
-    });
-  }
-
-  // Premium "spotlight" hover on cards (desktop / fine pointer only)
-  if (window.matchMedia?.("(pointer: fine)")?.matches) {
-    qsa(".card").forEach((card) => {
-      card.addEventListener("pointermove", (e) => {
-        const r = card.getBoundingClientRect();
-        const x = ((e.clientX - r.left) / r.width) * 100;
-        const y = ((e.clientY - r.top) / r.height) * 100;
-        card.style.setProperty("--mx", `${x}%`);
-        card.style.setProperty("--my", `${y}%`);
+            const countUp = (now) => {
+              const progress = Math.min((now - startTime) / countDuration, 1);
+              const currentVal = Math.floor(progress * targetNum);
+              numEl.textContent = `${currentVal.toString().padStart(2, '0')}${suffix}`;
+              if (progress < 1) {
+                requestAnimationFrame(countUp);
+              } else {
+                numEl.textContent = `${targetNum.toString().padStart(2, '0')}${suffix}`;
+              }
+            };
+            requestAnimationFrame(countUp);
+          }
+          observer.unobserve(statBox);
+        }
       });
-      card.addEventListener("pointerleave", () => {
-        card.style.removeProperty("--mx");
-        card.style.removeProperty("--my");
-      });
-    });
-  }
+    },
+    { threshold: 0.3 }
+  );
+  statBoxes.forEach((box) => statObserver.observe(box));
 
-  // Copy chips
-  qsa("[data-copy]").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const value = btn.getAttribute("data-copy") || "";
-      if (!value) return;
-      try {
-        await navigator.clipboard.writeText(value);
-        showToast("Copied!");
-      } catch {
-        // Fallback
-        const ta = document.createElement("textarea");
-        ta.value = value;
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-        showToast("Copied!");
-      }
-    });
-  });
-
-  // Back to top
-  const toTop = qs("#toTop");
-  function setToTop() {
-    const y = window.scrollY || 0;
-    toTop?.classList.toggle("is-visible", y > 600);
-  }
-  setToTop();
-  window.addEventListener("scroll", setToTop, { passive: true });
-  toTop?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-
-  // Print
-  qs("#printResumeBtn")?.addEventListener("click", () => window.print());
-
-  // Footer year
-  const year = qs("#year");
-  if (year) year.textContent = String(new Date().getFullYear());
-
-  // Contact form: mailto
-  const form = qs("#contactForm");
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const fd = new FormData(form);
-    const name = String(fd.get("name") || "").trim();
-    const email = String(fd.get("email") || "").trim();
-    const message = String(fd.get("message") || "").trim();
-
-    const subject = encodeURIComponent(`Portfolio Contact — ${name || "Someone"}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\n— Sent from portfolio website`
-    );
-
-    window.location.href = `mailto:dhinaharmurugesan@gmail.com?subject=${subject}&body=${body}`;
-    showToast("Opening email…");
-    form.reset();
-  });
-
-  // Project modal
-  const modal = qs("#modal");
-  const modalTitle = qs("#modalTitle");
-  const modalBody = qs("#modalBody");
-  let lastFocusedEl = null;
-
-  const modalData = {
+  /* ==================================================
+     10. PROJECT DETAILS MODAL
+     ================================================== */
+  const projectDatabase = {
+    voice: {
+      badge: 'PROJECT 01 // SYSTEM AUTOMATION',
+      title: 'AI Voice Operating System',
+      image: 'ai_voice_os.jpg',
+      desc: 'An intelligent desktop control interface that converts natural spoken commands into deterministic system-level actions. Leverages real-time audio spectral processing, custom prompt orchestration, and OS automation scripts to execute multi-step workflows without touching the mouse or keyboard.',
+      highlights: [
+        'Real-time voice activity detection (VAD) and high-accuracy acoustic modeling',
+        'Natural language intent classification with fallback execution pipelines',
+        'Automated file handling, application routing, and browser navigation hooks',
+        'Local model inference support for privacy-first enterprise deployments'
+      ],
+      tech: ['Python', 'AI / NLP', 'SpeechRecognition', 'PyAudio', 'OS Hooks', 'Threading'],
+      repo: 'https://github.com/dhinahar04'
+    },
+    nebula: {
+      badge: 'PROJECT 02 // AI WORKSPACE',
+      title: 'Nebula — AI Workspace Browser',
+      image: 'nebula_browser.jpg',
+      desc: 'An AI-native workspace and browser environment designed to understand tabs, active research notes, and live web applications. Synthesizes cross-tab information, provides context-aware code suggestions, and surfaces instant semantic summaries directly within the browser runtime.',
+      highlights: [
+        'Context-aware multi-tab synthesis and unified research canvas',
+        'Reactive Next.js frontend with split-panel glassmorphic workspace view',
+        'Integrated live markdown and code execution previews',
+        'Local vector database for semantic memory across browsing sessions'
+      ],
+      tech: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Browser Extensions API', 'Vector Embeddings'],
+      repo: 'https://github.com/dhinahar04'
+    },
     phishing: {
-      title: "PHISHING EMAIL DETECTION",
-      repo: "https://github.com/dhinahar04/phishing_email_detector",
-      bullets: [
-        "Built a machine learning model to detect phishing emails using text and URL-based features.",
-        "Trained and evaluated multiple algorithms (Logistic Regression, Random Forest, etc.) to achieve high accuracy.",
-        "Deployed the model as a simple web app using Flask/Django for real-time detection.",
+      badge: 'PROJECT 03 // CYBERSECURITY',
+      title: 'Phishing Email Detection System',
+      image: 'phishing.png',
+      desc: 'A machine learning system engineered to detect fraudulent and phishing communications before they reach end-user inboxes. Analyzes textual syntactic patterns, sender reputation markers, and embedded URL risk scores using natural language processing pipelines.',
+      highlights: [
+        'Multi-feature extraction analyzing email headers, HTML structures, and body tokens',
+        'High-accuracy classification trained on real-world phishing datasets',
+        'Lightweight Flask microservice API for frictionless enterprise mail integration',
+        'Interactive administrative dashboard visualizing attack vectors and model metrics'
       ],
-      tags: ["Python", "Machine Learning", "JS", "PostgreSQL"],
+      tech: ['Python', 'Flask', 'Machine Learning', 'NLP', 'Scikit-Learn', 'HTML/CSS'],
+      repo: 'https://github.com/dhinahar04/phishing_email_detector'
     },
-    vehicle: {
-      title: "VEHICLE SERVICE & MAINTENANCE BOOKING SYSTEM",
-      repo: "https://github.com/dhinahar04/Vehicle-Service-Maintenance-Booking-System",
-      bullets: [
-        "Developed a full-stack system allowing users to book services, track status, and view service history.",
-        "Implemented admin and workshop panels for managing appointments and customer records.",
-        "Ensured smooth workflow with secure authentication and a user-friendly interface.",
+    flood: {
+      badge: 'PROJECT 04 // COMPUTER VISION',
+      title: 'Flood Detection System',
+      image: 'flood_detection.jpg',
+      desc: 'A deep learning computer vision pipeline designed to analyze aerial drone footage and satellite imagery for rapid flood boundary identification. Accelerates emergency response by generating high-resolution inundation heatmaps in seconds.',
+      highlights: [
+        'Convolutional Neural Network (CNN) architecture trained on multi-spectral satellite imagery',
+        'Automated geospatial segmentation identifying waterlogged regions and riverbank overflow',
+        'Sub-second inference times enabling real-time telemetry processing',
+        'Interactive analytics dashboard for risk scoring and historical comparisons'
       ],
-      tags: ["React.js", "Node.js", "Express.js", "MongoDB"],
+      tech: ['Python', 'CNN', 'TensorFlow', 'OpenCV', 'Deep Learning', 'Computer Vision'],
+      repo: 'https://github.com/dhinahar04'
     },
-    ai_assistant: {
-      title: "Personal AI Study Assistant",
-      repo: "https://github.com/dhinahar04/AI-Study-Assistant",
-      bullets: [
-        "Developed an AI-powered study platform that summarizes notes, generates quizzes, and provides contextual answers.",
-        "Implemented personalized study plans and progress tracking to enhance learning efficiency.",
-        "Integrated AI/NLP models (OpenAI API) for smart content understanding; built with React.js and Python/Node.js.",
+    hostel: {
+      badge: 'PROJECT 05 // ENTERPRISE PLATFORM',
+      title: 'Smart Hostel Leave System',
+      image: 'smart_hostel.jpg',
+      desc: 'An enterprise digital gatepass and leave approval ecosystem. Modernizes traditional paper-based campus permissions with a multi-tiered approval hierarchy between students, faculty wardens, security gates, and parents.',
+      highlights: [
+        'Dynamic QR code generation with cryptographic expiration for gate verification',
+        'Multi-role permissions: Student, Warden, Security Staff, and Parent dashboards',
+        'PostgreSQL schema with strict ACID compliance and audit logging',
+        'Automated SMS / email triggers notifying parents on student exit and entry'
       ],
-      tags: ["React.js", "Python", "NLP", "MongoDB"],
-    },
+      tech: ['React', 'Node.js', 'Express.js', 'PostgreSQL', 'JWT Auth', 'QR Verification'],
+      repo: 'https://github.com/dhinahar04'
+    }
   };
 
-  function openModal(key) {
-    if (!modal || !modalTitle || !modalBody) return;
-    const data = modalData[key];
-    if (!data) return;
+  const projectModal = document.getElementById('projectModal');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalBadge = document.getElementById('modalBadge');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalImg = document.getElementById('modalImg');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalHighlights = document.getElementById('modalHighlights');
+  const modalTechStack = document.getElementById('modalTechStack');
+  const modalLiveLink = document.getElementById('modalLiveLink');
 
-    lastFocusedEl = document.activeElement;
+  const openProjectModal = (projectId) => {
+    const data = projectDatabase[projectId];
+    if (!data || !projectModal) return;
+
+    modalBadge.textContent = data.badge;
     modalTitle.textContent = data.title;
-    modalBody.innerHTML = `
-      <div class="modal-stagger" style="--d: 0ms">
-        <div class="tag-row" aria-label="Project tags">
-          ${data.tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
-        </div>
-      </div>
-      <div class="modal-stagger" style="--d: 100ms">
-        <div class="project-links" aria-label="Project links">
-          <a class="mini-link btn-primary" href="${escapeHtml(data.repo)}" target="_blank" rel="noreferrer noopener" style="padding: 10px 20px; font-size: 14px;">View Source</a>
-        </div>
-      </div>
-      <div class="modal-stagger" style="--d: 200ms">
-        <ul class="modal-bullets">
-          ${data.bullets.map((b) => `<li>${escapeHtml(b)}</li>`).join("")}
-        </ul>
-      </div>
-    `;
+    modalImg.src = data.image;
+    modalImg.alt = data.title;
+    modalDesc.textContent = data.desc;
 
-    modal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-
-    // Luxury entrance trigger
-    requestAnimationFrame(() => {
-      modal.classList.add("is-active");
+    // Highlights
+    modalHighlights.innerHTML = '';
+    data.highlights.forEach((h) => {
+      const li = document.createElement('li');
+      li.textContent = h;
+      modalHighlights.appendChild(li);
     });
 
-    qs(".modal-panel [data-modal-close]")?.focus?.();
+    // Tech Stack
+    modalTechStack.innerHTML = '';
+    data.tech.forEach((t) => {
+      const span = document.createElement('span');
+      span.className = 'tech-pill';
+      span.textContent = t;
+      modalTechStack.appendChild(span);
+    });
+
+    modalLiveLink.href = data.repo;
+
+    projectModal.classList.add('is-open');
+    projectModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (lenis) lenis.stop();
+    playClickPop();
+  };
+
+  const closeProjectModal = () => {
+    if (!projectModal) return;
+    projectModal.classList.remove('is-open');
+    projectModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lenis) lenis.start();
+  };
+
+  document.querySelectorAll('[data-project-id]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const projectId = btn.getAttribute('data-project-id');
+      if (projectId) openProjectModal(projectId);
+    });
+  });
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', () => {
+      playClickPop();
+      closeProjectModal();
+    });
   }
 
-  function closeModal() {
-    if (!modal) return;
-    modal.classList.remove("is-active");
+  if (projectModal) {
+    projectModal.addEventListener('click', (e) => {
+      if (e.target === projectModal) closeProjectModal();
+    });
+  }
 
-    // Wait for transition
-    setTimeout(() => {
-      modal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
-        lastFocusedEl.focus();
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && projectModal && projectModal.classList.contains('is-open')) {
+      closeProjectModal();
+    }
+  });
+
+  /* ==================================================
+     11. TOAST NOTIFICATIONS
+     ================================================== */
+  const toastNotice = document.getElementById('toastNotice');
+  const toastMsg = document.getElementById('toastMsg');
+  let toastTimeout = null;
+
+  const showToast = (message) => {
+    if (!toastNotice || !toastMsg) return;
+    toastMsg.textContent = message;
+    toastNotice.classList.add('is-visible');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toastNotice.classList.remove('is-visible');
+    }, 3200);
+  };
+
+  /* ==================================================
+     12. COPY EMAIL ACTION
+     ================================================== */
+  const copyEmailBtn = document.getElementById('copyEmailBtn');
+  if (copyEmailBtn) {
+    copyEmailBtn.addEventListener('click', () => {
+      const email = copyEmailBtn.getAttribute('data-email') || 'dhinaharmurugesan@gmail.com';
+      navigator.clipboard.writeText(email).then(() => {
+        showToast(`Copied ${email} to clipboard!`);
+        playClickPop();
+        // Trigger subtle confetti burst
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 25,
+            spread: 40,
+            origin: { y: 0.8 },
+            colors: ['#22d3ee', '#38bdf8', '#818cf8']
+          });
+        }
+      });
+    });
+  }
+
+  /* ==================================================
+     13. DOWNLOAD RESUME CELEBRATION
+     ================================================== */
+  const downloadResumeBtn = document.getElementById('downloadResumeBtn');
+  if (downloadResumeBtn) {
+    downloadResumeBtn.addEventListener('click', () => {
+      playClickPop();
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.6 },
+          colors: ['#22d3ee', '#ffffff', '#818cf8', '#38bdf8']
+        });
       }
-      lastFocusedEl = null;
-    }, 400);
+      showToast('Opening Resume...');
+      // Open print or prompt
+      setTimeout(() => {
+        window.print();
+      }, 400);
+    });
   }
 
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
+  /* ==================================================
+     14. BACK TO TOP BUTTON
+     ================================================== */
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      playClickPop();
+      if (lenis) {
+        lenis.scrollTo(0);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
   }
 
-  qsa("[data-modal-open]").forEach((btn) => {
-    btn.addEventListener("click", () => openModal(btn.getAttribute("data-modal-open")));
-  });
-
-  qsa("[data-modal-close]").forEach((el) => el.addEventListener("click", closeModal));
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal();
-  });
-})();
-
-
+  /* ==================================================
+     15. CONTACT FORM SUBMISSION
+     ================================================== */
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      // Let mailto or client handle, or provide visual feedback
+      playClickPop();
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 70,
+          spread: 70,
+          origin: { y: 0.7 },
+          colors: ['#22d3ee', '#a855f7', '#ffffff']
+        });
+      }
+      showToast('Opening your email client to send message...');
+    });
+  }
+});
