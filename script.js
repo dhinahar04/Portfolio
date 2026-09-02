@@ -407,60 +407,60 @@ document.addEventListener('DOMContentLoaded', () => {
      10. PROJECT DETAILS MODAL
      ================================================== */
   const projectDatabase = {
-    voice: {
-      badge: 'PROJECT 01 // SYSTEM AUTOMATION',
-      title: 'AI Voice Operating System',
-      image: 'ai_voice_os.jpg',
-      desc: 'An intelligent desktop control interface that converts natural spoken commands into deterministic system-level actions. Leverages real-time audio spectral processing, custom prompt orchestration, and OS automation scripts to execute multi-step workflows without touching the mouse or keyboard.',
+    health: {
+      badge: 'PROJECT 01 // HEALTHCARE AI',
+      title: 'AI Health Query',
+      image: 'ai_health_query.jpg',
+      desc: 'An intelligent clinical query and conversational medical intelligence platform. Empowers patients and healthcare practitioners with rapid symptom triage, vital sign risk assessment, and contextual clinical guidance powered by medical NLP models.',
       highlights: [
-        'Real-time voice activity detection (VAD) and high-accuracy acoustic modeling',
-        'Natural language intent classification with fallback execution pipelines',
-        'Automated file handling, application routing, and browser navigation hooks',
-        'Local model inference support for privacy-first enterprise deployments'
+        'Real-time symptom semantic matching and vital trends monitoring',
+        'Clinical intent classification with automated triage escalation protocols',
+        'Secure patient telemetry interface with risk probability mapping',
+        'Privacy-first design adhering to digital health data protection standards'
       ],
-      tech: ['Python', 'AI / NLP', 'SpeechRecognition', 'PyAudio', 'OS Hooks', 'Threading'],
+      tech: ['Python', 'NLP', 'FastAPI', 'PyTorch', 'Medical AI', 'React'],
       repo: 'https://github.com/dhinahar04'
     },
-    nebula: {
-      badge: 'PROJECT 02 // AI WORKSPACE',
-      title: 'Nebula — AI Workspace Browser',
-      image: 'nebula_browser.jpg',
-      desc: 'An AI-native workspace and browser environment designed to understand tabs, active research notes, and live web applications. Synthesizes cross-tab information, provides context-aware code suggestions, and surfaces instant semantic summaries directly within the browser runtime.',
+    consumer: {
+      badge: 'PROJECT 02 // CONSUMER DEFENSE',
+      title: 'AI Consumer Guardian',
+      image: 'ai_consumer_guardian.jpg',
+      desc: 'An autonomous digital consumer protection ecosystem engineered to detect deceptive UI patterns, fraudulent merchant activities, and unauthorized transaction anomalies in real-time. Protects consumers against digital financial threats.',
       highlights: [
-        'Context-aware multi-tab synthesis and unified research canvas',
-        'Reactive Next.js frontend with split-panel glassmorphic workspace view',
-        'Integrated live markdown and code execution previews',
-        'Local vector database for semantic memory across browsing sessions'
+        'Automated threat telemetry and multi-vector scam pattern detection',
+        'Real-time transaction volume analysis and anomaly clustering',
+        'Automated consumer dispute document and evidence generation',
+        'Interactive incident feed with global threat vector visualization'
       ],
-      tech: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Browser Extensions API', 'Vector Embeddings'],
+      tech: ['React', 'Next.js', 'Python', 'Fraud Detection', 'Cybersecurity', 'Tailwind CSS'],
       repo: 'https://github.com/dhinahar04'
     },
-    phishing: {
-      badge: 'PROJECT 03 // CYBERSECURITY',
-      title: 'Phishing Email Detection System',
-      image: 'phishing.png',
-      desc: 'A machine learning system engineered to detect fraudulent and phishing communications before they reach end-user inboxes. Analyzes textual syntactic patterns, sender reputation markers, and embedded URL risk scores using natural language processing pipelines.',
+    biovision: {
+      badge: 'PROJECT 03 // BIOMEDICAL VISION',
+      title: 'BioVision AI',
+      image: 'biovision_ai.jpg',
+      desc: 'Deep learning computer vision platform for automated cellular microscopy analysis and tissue pathology segmentation. Accelerates biomedical research and clinical lab workflows by delivering sub-second cell classification and morphological anomaly heatmaps.',
       highlights: [
-        'Multi-feature extraction analyzing email headers, HTML structures, and body tokens',
-        'High-accuracy classification trained on real-world phishing datasets',
-        'Lightweight Flask microservice API for frictionless enterprise mail integration',
-        'Interactive administrative dashboard visualizing attack vectors and model metrics'
+        'Convolutional neural network segmentation analyzing cellular microscopy slides',
+        'High-confidence cell classification across epithelial, immune, and atypical types',
+        'Interactive heatmap overlay with adjustable confidence thresholds',
+        'Comprehensive pathology reporting interface for laboratory researchers'
       ],
-      tech: ['Python', 'Flask', 'Machine Learning', 'NLP', 'Scikit-Learn', 'HTML/CSS'],
-      repo: 'https://github.com/dhinahar04/phishing_email_detector'
+      tech: ['Python', 'PyTorch', 'CNN', 'OpenCV', 'Biomedical ML', 'Deep Learning'],
+      repo: 'https://github.com/dhinahar04'
     },
-    flood: {
-      badge: 'PROJECT 04 // COMPUTER VISION',
-      title: 'Flood Detection System',
-      image: 'flood_detection.jpg',
-      desc: 'A deep learning computer vision pipeline designed to analyze aerial drone footage and satellite imagery for rapid flood boundary identification. Accelerates emergency response by generating high-resolution inundation heatmaps in seconds.',
+    leakage: {
+      badge: 'PROJECT 04 // DIGITAL FORENSICS',
+      title: 'Exam Paper Leakage Detection',
+      image: 'exam_paper_leakage.jpg',
+      desc: 'High-security academic integrity and examination document forensics ecosystem. Utilizes dynamic cryptographic steganography, invisible micro-watermarks, and anomaly access tracking to detect and trace confidential exam paper leaks instantaneously.',
       highlights: [
-        'Convolutional Neural Network (CNN) architecture trained on multi-spectral satellite imagery',
-        'Automated geospatial segmentation identifying waterlogged regions and riverbank overflow',
-        'Sub-second inference times enabling real-time telemetry processing',
-        'Interactive analytics dashboard for risk scoring and historical comparisons'
+        'Dynamic cryptographic watermarking with unique recipient micro-signatures',
+        'Anti-tampering file integrity validation and anomalous access detection',
+        'Automated leak provenance tracking mapping leaks back to specific distribution nodes',
+        'Live document forensic dashboard with real-time risk vulnerability indicators'
       ],
-      tech: ['Python', 'CNN', 'TensorFlow', 'OpenCV', 'Deep Learning', 'Computer Vision'],
+      tech: ['Python', 'Digital Forensics', 'Steganography', 'Cryptography', 'Flask', 'Audit Telemetry'],
       repo: 'https://github.com/dhinahar04'
     },
     hostel: {

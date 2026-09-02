@@ -17,10 +17,10 @@ A premium, cinematic, highly interactive personal portfolio website for **Dhinah
 - **Lenis Smooth Scroll Engine**: Inertial smooth scrolling with spring easing and active navbar section spy.
 - **Custom Desktop Cursor**: Magnetic follower dot expanding into a glowing ring on hoverables and a pill displaying `"VIEW ↗"` over project cards.
 - **5 Featured Engineering Projects**:
-  1. **AI Voice Operating System**: Hands-free natural language computer automation.
-  2. **Nebula — AI Workspace Browser**: AI-native workspace analyzing tabs, docs, and live code.
-  3. **Phishing Email Detection**: Machine learning & NLP security classifier.
-  4. **Flood Detection System**: Deep learning CNN computer vision disaster monitoring.
+  1. **AI Health Query**: Clinical query & conversational medical intelligence platform.
+  2. **AI Consumer Guardian**: Fraud protection & digital consumer rights defense ecosystem.
+  3. **BioVision AI**: Cellular microscopy analysis & pathology computer vision platform.
+  4. **Exam Paper Leakage Detection**: Cryptographic steganography & examination forensics platform.
   5. **Smart Hostel Leave System**: Digital gatepass approval ecosystem with QR verification.
 - **Interactive Project Deep Dive Modal**: Detailed architecture highlights, technology pills, and direct repository links.
 - **Synthesized Web Audio Feedback**: Subtle procedural audio ticks and pops via browser Web Audio API with a persistent mute toggle.
